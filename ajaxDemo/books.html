@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="bookresults"></div>
+<div id="itunesResults"></div>
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+        //make ajax request
+        //$.ajax or $.post or $.get
+
+       $.get(
+           'https://itunes.apple.com/search',
+           {
+               term: 'blind+guardian', limit: 10
+           },
+           function(data)
+           {
+
+               for(let i = 0; i < data.results.length; i++)
+               {
+                   $('#itunesResults').append('<h3>' +  data.results[i].trackName + '</h3>');
+               }
+           },
+           'json'
+       )
+
+
+
+       //  $.get(
+       //     'https://www.googleapis.com/books/v1/volumes', //endpoint
+       //     {
+       //         q:'🐈', maxResults: 20
+       //         //q: 'bees', maxResults: 20 //data to pass to api
+       //     },
+       //     function(data){ //gets called when results come back. data is returned object
+       //         //validate response first
+       //
+       //         //loop through results
+       //         for(let i = 0; i < data.items.length; i++)
+       //         {
+       //             $('#bookresults').append('<h3>' + data.items[i].volumeInfo.title + '</h3>');
+       //             $('<img>').attr('src', data.items[i].volumeInfo.imageLinks.thumbnail).appendTo('#bookresults');
+       //         }
+       //     },
+       //     'json' //expected result format
+       // )
+
+    });
+
+</script>
+</body>
+</html>

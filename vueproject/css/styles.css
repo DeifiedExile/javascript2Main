@@ -1,0 +1,36 @@
+div.mtgCard.silver {
+    background-color: rgb(129, 149, 169)
+}
+
+div.mtgCard.red {
+    background-color: rgb(119, 31, 31)
+}
+
+div.mtgCard.green {
+    background-color: rgb(122, 148, 96)
+}
+
+div.mtgCard.blue {
+    background-color: #4286b4
+}
+
+div.mtgCard.black {
+    background-color: #0e0e16
+}
+
+div.mtgCard.white {
+    background-color: ivory;
+}
+
+div.mtgCardBody {
+    background-image: url(../img/rocky-wall.png);
+    opacity: 50%;
+}
+
+.info {
+    background-color: whitesmoke;
+    opacity: .5;
+    color: #262626;
+    border: 2px solid #0e0e0e;
+    border-radius: 3px;
+}

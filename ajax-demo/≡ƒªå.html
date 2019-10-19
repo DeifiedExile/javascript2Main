@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books!</title>
+</head>
+<style>
+    .😀🦆{
+        border: 2px solid blue;
+    }
+
+</style>
+
+<body>
+
+<div id="results" class="😀🦆"></div>
+
+
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+       // make ajax request
+       // $.ajax
+       // $.post
+       $.get(
+           'https://www.googleapis.com/books/v1/volumes', // API endpoint
+           {q: '🦆', maxResults: 20}, // data to pass to API
+           function(data){
+               // validate response
+
+               // loop through results
+               for(let i = 0; i < data.items.length; i++){
+                   $('#results').append('<h3>' + data.items[i].volumeInfo.title + '</h3>');
+
+                   $('<img>').attr('src', data.items[i].volumeInfo.imageLinks.thumbnail).appendTo('#results');
+               }
+           },
+           'json'
+       )
+    });
+
+
+</script>
+
+</body>
+</html>

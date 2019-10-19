@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+
+
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
+
+
+    <script src="js/scripts.js"></script>
+
+</head>
+<body>
+<div>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <button type="button" class="btn btn-primary" id="tab1" data-toggle="modal" data-target="#welcomeModal">
+                    Welcome
+                </button>
+
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal">
+                    Welcome
+                </button>
+
+            </li>
+
+
+        </ul>
+
+
+    </div>
+    <div>
+        <form id="deckForm">
+
+            <b-modal class="modal fade col-sm-10 offset-1" id="welcomeModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Welcome to the deck builder</h4>
+                        </div>
+                        <div class="modal-body">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal">
+                                Click here to get started
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </b-modal>
+            <div class="modal fade col-sm-10 offset-1" id="infoModal" tabindex="-1" role="dialog">
+
+                <b-modal class="modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Lets get some basic information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="deckName">Whats your deck's name?</label>
+                                <input type="text" class="form-control" id="deckName" minlength="3" placeholder="Deck Name" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="deckDescription">Tell us about your deck</label>
+                                <textarea class="form-control" id="deckDescription" cols="40" rows="5" placeholder="Deck Description" minlength="3" required="required">
+                                </textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <label for="deckFormat">What format is your deck for?</label>
+                                        <select name="format" id="deckFormat"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="deckHubs">What hubs does your deck belong to?</label>
+                                        <input type="text" id="deckHubs">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cardModal">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                </b-modal>
+            </div>
+            <div class="modal fade col-sm-12" id="cardModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Lets find some cards for your deck</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="container col-sm-6" id="app">
+                                    <b-form @submit.prevent="searchCards()">
+                                        <b-button type="submit">search</b-button>
+                                    </b-form>
+
+
+                                </div>
+                                <div class="container col-sm-6" id="deckList">
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cardModal">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="container" id="tab2">
+        <div class="container">
+            <h3>Lets get some basic information</h3>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.js"></script>
+<script src="js/app-models.js"></script>
+<script src="js/app-components.js"></script>
+<script src="js/app.js"></script>
+</body>
+
+</html>

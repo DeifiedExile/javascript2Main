@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6bf3173e-9edf-474f-bfa0-a836eedd7bad" name="bitlamp" url="https://lwolfs.bitlampsites.com/js2">
+        <fileTransfer host="lwolfs.bitlampsites.com" port="22" rootFolder="/public_html/js2" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
