@@ -19,7 +19,6 @@ var app = new Vue({
             let url = 'https://api.scryfall.com/cards/search';
             let config = {
                 params: {
-
                     q: this.searchName
                 }
             }
@@ -31,6 +30,7 @@ var app = new Vue({
                     console.log(response);
                     if(response.data.totalItems > 0){
                         this.searchResults = new BookCollection(response.data.data);
+                        console.log(response.data);
                     }
                 })
                 .catch(function(error){

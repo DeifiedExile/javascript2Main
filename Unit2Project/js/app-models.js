@@ -1,5 +1,4 @@
 
-
 var Deck = function(arr){
 
     //create empty array if none provided
