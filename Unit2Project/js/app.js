@@ -2,12 +2,19 @@ var app = new Vue({
 
     el: '#app',
      data: {
-
-        searchName: 'goblin',
-        searchResults: new Deck(),
+         searchName: 'forest',
+         searchResults: new Deck(),
+         cards: new Deck(),
+         cardList: 'cardList'
      },
 
     methods: {
+
+        display(cardList){
+            this.cardList = cardList;
+            this.cards = this.searchResults;
+        },
+
         //search for cards
         searchCards(){
 
@@ -23,20 +30,33 @@ var app = new Vue({
                 }
             }
 
+
+
             //execute request
             this.$http
                 .get(url, config)
                 .then(function(response){
                     console.log(response);
-                    if(response.data.totalItems > 0){
-                        this.searchResults = new BookCollection(response.data.data);
-                        console.log(response.data);
+                    if(response.data.total_cards > 0){
+                        this.searchResults = new Deck(response.data.data);
+
+                        
                     }
                 })
                 .catch(function(error){
                     console.error('ajax query error', error);
                 })
+                .finally(function(){
+                    this.display()
+                })
         }
+    },
+    computed: {
+
+    },
+    mounted: function(){
+
+        this.searchCards();
     }
 
 });

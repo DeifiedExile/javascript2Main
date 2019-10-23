@@ -5,6 +5,7 @@ var Deck = function(arr){
     if(!Array.isArray(arr)){
         arr = [];
     }
+
     //adds card to deck
     arr.add = function(card){
         return arr.push(card);
@@ -14,9 +15,11 @@ var Deck = function(arr){
         return arr.splice(arr.findCard(card), 1);
     };
 
-    arr.contains = function(book){
+    arr.contains = function(card){
         return this.findCard(card) >= 0;
     };
+
+
     //finds card in deck
     arr.findCard = function(card){
         return arr.findIndex(function(item){

@@ -7,13 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-
-
-
-
     <script src="js/scripts.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 
 </head>
 <body>
@@ -33,11 +30,6 @@
         </ul>
     </div>
 
-
-
-
-
-
     <div>
         <form id="deckForm">
 
@@ -48,15 +40,26 @@
                 <b-row>
                     <b-col sm="6">
                         <b-row>
-                            <b-form @submit-prevent="searchCards()">
+                            <b-nav-form @submit-prevent="searchCards()">
+                                <b-button size="sm">White</b-button>
+                                <b-button size="sm">Blue</b-button>
+                                <b-button size="sm">Black</b-button>
+                                <b-button size="sm">Red</b-button>
+                                <b-button size="sm">Green</b-button>
+                                <b-button size="sm">Colorless</b-button>
+
                                 <b-form-input size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
                                 <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
-                            </b-form>
+                            </b-nav-form>
                         </b-row>
-                        <b-row v-if="searchResults.length > 0">
-                            <card v-for="card in searchResults" :key="card.name"></card>
 
-                        </b-row>
+                        <b-container class="cardList">
+                            <b-row v-if="searchResults.length > 0">
+                                <card v-for="card in cards" :key="card.id" :card="card" :deck="deck"></card>
+
+                            </b-row>
+                        </b-container>
+
 
                     </b-col>
                     <div id="deckContainer" class="col-6">
