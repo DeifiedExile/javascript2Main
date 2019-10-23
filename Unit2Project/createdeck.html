@@ -10,27 +10,28 @@
     <script src="js/scripts.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
     <link rel="stylesheet" href="css/styles.css">
 
 </head>
 <body>
-<div id="app">
-    <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <button type="button" class="btn btn-primary" id="tab1" data-toggle="modal" data-target="#welcomeModal">
-                    Welcome
-                </button>
-            </li>
-            <li class="nav-item">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal">
-                    Welcome
-                </button>
-            </li>
-        </ul>
-    </div>
+<div>
+<!--    <div class="container">-->
+<!--        <ul class="nav nav-tabs">-->
+<!--            <li class="nav-item">-->
+<!--                <button type="button" class="btn btn-primary" id="tab1" data-toggle="modal" data-target="#welcomeModal">-->
+<!--                    Welcome-->
+<!--                </button>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal">-->
+<!--                    Welcome-->
+<!--                </button>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
 
-    <div>
+    <div id="app">
         <form id="deckForm">
 
 
@@ -41,12 +42,12 @@
                     <b-col sm="6">
                         <b-row>
                             <b-nav-form @submit-prevent="searchCards()">
-                                <b-button size="sm">White</b-button>
-                                <b-button size="sm">Blue</b-button>
-                                <b-button size="sm">Black</b-button>
-                                <b-button size="sm">Red</b-button>
-                                <b-button size="sm">Green</b-button>
-                                <b-button size="sm">Colorless</b-button>
+<!--                                <b-button size="sm">White</b-button>-->
+<!--                                <b-button size="sm">Blue</b-button>-->
+<!--                                <b-button size="sm">Black</b-button>-->
+<!--                                <b-button size="sm">Red</b-button>-->
+<!--                                <b-button size="sm">Green</b-button>-->
+<!--                                <b-button size="sm">Colorless</b-button>-->
 
                                 <b-form-input size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
                                 <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
@@ -54,9 +55,19 @@
                         </b-row>
 
                         <b-container class="cardList">
-                            <b-row v-if="searchResults.length > 0">
+                            <b-row v-if="searching" class="justify-content-sm-center">
+                                <b-col sm-10>
+                                    <b-alert show variant="warning">Searching...</b-alert>
+                                </b-col>
+                            </b-row>
+                            <b-row v-else-if="searchResults.length > 0">
                                 <card v-for="card in cards" :key="card.id" :card="card" :deck="deck"></card>
 
+                            </b-row>
+                            <b-row v-else class="justify-content-sm-center">
+                                <b-col sm-10>
+                                    <b-alert show variant="danger">No cards found.</b-alert>
+                                </b-col>
                             </b-row>
                         </b-container>
 
@@ -118,7 +129,7 @@
 
 
 
-<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
+
 
 
 <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
