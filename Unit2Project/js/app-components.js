@@ -1,10 +1,11 @@
 Vue.component('card', {
     props: {
         card: {type: Object, required: true},
-        deck: {type: Array, required: true}
+        // deck: {type: Array, required: true}
 
     },
-    data: {
+    data: function() {
+        return this.card;
 
 
     },
@@ -25,11 +26,12 @@ Vue.component('card', {
 
     methods: {
         addToDeck(){
-            this.deck.add(this.card);
+            this.$emit(this.card);
+            // this.deck.add(this.card);
         },
-        removeFromDeck(){
-            this.deck.subtract(this.card);
-        }
+        // removeFromDeck(){
+        //     this.deck.subtract(this.card);
+        // }
     },
 
     template: `
@@ -39,11 +41,11 @@ Vue.component('card', {
                 </div>
                 <div class="card-body mtgCardBody"> 
                                    
-                    <img v-bind:src="this.getImgReg" @click="addToDeck" class="card-img">
+                    <img v-bind:src="this.getImgReg" @click="this.addToDeck" class="card-img">
                     
-                    <p class="card-text info col-6 offset-3"> Quantity: {{card.qty}} </p>
-                    <button class="btn btn-tiny" @click="add(card)"><i class="fas fa-plus-circle"></i></button>
-                    <button class="btn btn-tiny" @click="subtract(card)"><i class="fas fa-minus-circle"></i></button>
+<!--                    <p class="card-text info col-6 offset-3"> Quantity: {{card.qty}} </p>-->
+<!--                    <button class="btn btn-tiny" @click="add(card)"><i class="fas fa-plus-circle"></i></button>-->
+<!--                    <button class="btn btn-tiny" @click="subtract(card)"><i class="fas fa-minus-circle"></i></button>-->
                 </div>
             </div>
     `

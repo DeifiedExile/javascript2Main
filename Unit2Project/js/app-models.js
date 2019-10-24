@@ -28,7 +28,14 @@ var Deck = function(arr){
     };
     return arr;
 
+};
+var TypeList = function(arr){
+    if(!Array.isArray(arr)){
+        arr = [];
+    }
+    arr.add = function(type){
+        return arr.push(type);
+    };
+    return arr;
 
-
-
-}
+};

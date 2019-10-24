@@ -41,13 +41,15 @@
                 <b-row>
                     <b-col sm="6">
                         <b-row>
-                            <b-nav-form @submit-prevent="searchCards()">
+                            <b-nav-form @submit.prevent="searchCards()">
 <!--                                <b-button size="sm">White</b-button>-->
 <!--                                <b-button size="sm">Blue</b-button>-->
 <!--                                <b-button size="sm">Black</b-button>-->
 <!--                                <b-button size="sm">Red</b-button>-->
 <!--                                <b-button size="sm">Green</b-button>-->
 <!--                                <b-button size="sm">Colorless</b-button>-->
+                                <b-form-select size="sm" v-model="searchType" :options="cardTypeList"></b-form-select>
+                                <b-form-select v-if="subTypes.length > 0" v-model="searchSubType" :options="subTypeList"></b-form-select>
 
                                 <b-form-input size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
                                 <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
@@ -61,7 +63,7 @@
                                 </b-col>
                             </b-row>
                             <b-row v-else-if="searchResults.length > 0">
-                                <card v-for="card in cards" :key="card.id" :card="card" :deck="deck"></card>
+                                <card v-for="card in cards" :key="card.id" :card="card"  ></card><!--:deck="deck"-->
 
                             </b-row>
                             <b-row v-else class="justify-content-sm-center">
