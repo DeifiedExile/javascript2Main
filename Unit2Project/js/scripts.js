@@ -1,9 +1,12 @@
 $(document).ready(function(){
 
-    $('#tab1').click();
+    var num = Math.random()*100;
 
-    $('#closeInfoModal').on('click', function(){
-        console.log('click');
-        $('#infoModal').modal('hide');
-    });
+    $('#randnum').html(num);
+    // $('#tab1').click();
+    //
+    // $('#closeInfoModal').on('click', function(){
+    //     console.log('click');
+    //     $('#infoModal').modal('hide');
+    // });
 });

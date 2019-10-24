@@ -30,7 +30,7 @@
 <!--            </li>-->
 <!--        </ul>-->
 <!--    </div>-->
-
+<h2><span id="randnum"></span></h2>
     <div id="app">
         <form id="deckForm">
 
@@ -51,7 +51,9 @@
                                 <b-form-select size="sm" v-model="searchType" :options="cardTypeList"></b-form-select>
                                 <b-form-select v-if="subTypes.length > 0" v-model="searchSubType" :options="subTypeList"></b-form-select>
 
+
                                 <b-form-input size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
+                                <b-form-input size="sm" type="select"
                                 <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
                             </b-nav-form>
                         </b-row>
