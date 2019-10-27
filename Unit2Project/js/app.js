@@ -4,13 +4,15 @@ var app = new Vue({
      data: {
          searching: true,
          deckList: new Deck(),
+         deckCardList: [],
          searchName: 'forest',
-         searchType: '',
-         searchSubType: '',
+         searchType: null,
+         searchSubType: null,
          searchResults: new Deck(),
-         cards: new Deck(),
+         cards: [],
          cardList: 'cardList',
          cardTypeList: [
+             {value: null, text: '-Select a type-'},
              {value: 'artifact-types', text: 'artifact'},
              {value: "", text: 'conspiracy'},
              {value: 'creature-types', text: 'creature'},
@@ -24,9 +26,29 @@ var app = new Vue({
              {value: "spell-types", text: 'sorcery'},
              {value: "", text: 'tribal'},
              {value: "", text:  'vanguard'}
+
              ],
          subTypeList: new TypeList(),
          subTypes: new TypeList(),
+         colors: [
+             {name: 'White', status: 0},
+             {name: 'Blue', status: 0},
+             {name: 'Black', status: 0},
+             {name: 'Red', status: 0},
+             {name: 'Green', status: 0},
+             {name: 'Colorless', status: 0},
+
+         ],
+
+         colorList: [new Color('w', 'White', 0),
+                    new Color('u', 'Blue', 0),
+                    new Color('b', 'Black', 0),
+                    new Color('r', 'Red', 0),
+                    new Color('g', 'Green', 0),
+                    new Color('c', 'Colorless', 0)]
+
+         ,
+         logicOptions: ['NOT', 'AND', 'OR']
 
 
      },
@@ -35,10 +57,29 @@ var app = new Vue({
 
         displayCards(cardList){
             this.cardList = cardList;
-            this.cards = this.searchResults;
+            this.cards = this.searchResults.getCards();
+            this.deckCardList = this.deckList.getCards();
+            console.log(this.cards);
         },
-        displaySubTypes(subTypeList){
+
+        displaySubTypes(){
             this.subTypes = this.subTypeList;
+            if(this.subTypes.length > 0)
+            {
+                console.log(this.subTypes.length);
+
+                console.log(this.subTypeList.length);
+
+            }
+            else
+            {
+                console.log("none");
+            }
+
+
+            $('.subTypeSelect').css({
+                minWidth: $('#typeSelect').width()
+            });
         },
 
 
@@ -52,14 +93,22 @@ var app = new Vue({
 
                 let queryString = '';
                 //queryString += this.searchName;
-                if(this.searchType !== '')
+                if(this.searchType !== '' && this.searchType !== null)
                 {
+                    if(this.searchType.includes('-types'))
+                    {
+                        queryString +=  ' t:' + this.searchType.slice(0, this.searchType.indexOf('-types'));
+                    }
+                    else
+                    {
+                        queryString +=  ' t:' + this.searchType;
+                    }
 
 
-                    queryString +=  ' t:' + this.searchType.slice(0, this.searchType.indexOf('-types'));
+
                 }
 
-                if(this.searchSubType !== '')
+                if(this.searchSubType !== '' && this.searchSubType !== null)
                 {
                     queryString += ' t:' + this.searchSubType;
                 }
@@ -93,7 +142,16 @@ var app = new Vue({
                     .then(function (response) {
                         console.log(response);
                         if (response.data.total_cards > 0) {
-                            this.searchResults = new Deck(response.data.data);
+                            // this.searchResults = new Deck(response.data.data);
+                            var items = response.data.data;
+                            for(let i = 0; i < items.length; i++)
+                            {
+
+                                this.searchResults.add(items[i], 1);
+                            }
+                            // items.foreach(card => {
+                            //     this.searchResults.add(card, 1);
+                            // });
                             console.log(url, config);
 
 
@@ -105,7 +163,7 @@ var app = new Vue({
                     })
                     .finally(function () {
                         this.searching = false;
-                        this.displayCards()
+                        this.displayCards();
 
                     })
             }
@@ -127,7 +185,7 @@ var app = new Vue({
 
 
                             this.subTypeList = new TypeList(response.data.data);
-                            this.subTypeList.add('');
+                            this.subTypeList.add({value: null, text: '-Select a subtype-'});
 
 
 
@@ -144,8 +202,22 @@ var app = new Vue({
             }
 
         },
-        addToDeck(card) {
-            this.deckList.add(card);
+        addToDeck(addCard, card) {
+            console.log('click');
+            this.deckList.add(card, 1);
+            this.deckCardList = this.deckList.getCards();
+            this.displayCards();
+        },
+        changeColorOption(color){
+            if(color.status < 2)
+            {
+                color.status += 1;
+            }
+            else
+            {
+                color.status = 0;
+            }
+
         }
 
     },
@@ -159,7 +231,14 @@ var app = new Vue({
     watch: {
         searchType: {
             handler: function(){
+                this.subTypeList = new TypeList();
+
                 this.getSubTypes();
+            }
+        },
+        deckCardList: {
+            handler: function(){
+                console.log(this.deckCardList);
             }
         }
     }

@@ -30,7 +30,7 @@
 <!--            </li>-->
 <!--        </ul>-->
 <!--    </div>-->
-<h2><span id="randnum"></span></h2>
+
     <div id="app">
         <form id="deckForm">
 
@@ -39,7 +39,7 @@
 
             <b-container fluid class="border">
                 <b-row>
-                    <b-col sm="6">
+                    <b-col sm="6" >
                         <b-row>
                             <b-nav-form @submit.prevent="searchCards()">
 <!--                                <b-button size="sm">White</b-button>-->
@@ -48,38 +48,105 @@
 <!--                                <b-button size="sm">Red</b-button>-->
 <!--                                <b-button size="sm">Green</b-button>-->
 <!--                                <b-button size="sm">Colorless</b-button>-->
-                                <b-form-select size="sm" v-model="searchType" :options="cardTypeList"></b-form-select>
-                                <b-form-select v-if="subTypes.length > 0" v-model="searchSubType" :options="subTypeList"></b-form-select>
+                                <b-container fluid class="border m-3">
+
+                                    <b-row>
+
+                                        <b-col sm="6">
+                                            <label for="typeSelect">Type: </label>
+                                        </b-col>
+                                        <b-col sm="6" >
+                                            <b-form-select id="typeSelect" size="sm" v-model="searchType" :options="cardTypeList"></b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                    <b-row>
+
+                                        <b-col sm="6">
+                                            <label for="subTypeSelect">Subtype: </label>
+                                        </b-col>
+                                        <b-col sm="6">
+                                            <b-form-select  v-if="subTypes.length > 0" size="sm" class="subTypeSelect" id="subTypeSelect" v-model="searchSubType" :options="subTypeList"></b-form-select>
+                                            <b-form-select v-else size="sm" disabled="disabled"  class="subTypeSelect">
+                                                <option value=""></option>
+                                            </b-form-select>
+                                        </b-col>
 
 
-                                <b-form-input size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
-                                <b-form-input size="sm" type="select"
+                                    </b-row>
+<!--                                    <b-row>-->
+<!--                                        <color v-for="item in colorList" :color="item"></color>-->
+<!--&lt;!&ndash;                                        <div v-for="item in colorList" class="colorButton">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <button type="button" class="btn btn-sm btn-secodary" @click="this.change">{{color.options[status]}}</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            {{color}}&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                                    </b-row>-->
+                                    <b-row>
+                                        <div v-for="color in colors" class="colorButton">
+                                            <button type="button" class="btn btn-sm btn-outline-primary colorBtn mx-1"  @click="changeColorOption(color)">{{logicOptions[color.status]}}</button>
+                                            {{color.name}}
+                                        </div>
+
+                                    </b-row>
+
+
+
+                                    <b-row>
+                                        <label for="searchInput">Search term: </label>
+                                        <b-form-input id="searchInput" size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
+
+                                    </b-row>
+
+                                </b-container>
+
+
+
+
+
+
                                 <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
                             </b-nav-form>
                         </b-row>
 
-                        <b-container class="cardList">
-                            <b-row v-if="searching" class="justify-content-sm-center">
-                                <b-col sm-10>
-                                    <b-alert show variant="warning">Searching...</b-alert>
-                                </b-col>
-                            </b-row>
-                            <b-row v-else-if="searchResults.length > 0">
-                                <card v-for="card in cards" :key="card.id" :card="card"  ></card><!--:deck="deck"-->
+                        <b-row>
+                            <b-container class="cardList border">
+                                <b-row v-if="searching" class="justify-content-sm-center">
+                                    <b-col sm-10>
+                                        <b-alert show variant="warning">Searching...</b-alert>
+                                    </b-col>
+                                </b-row>
+                                <b-row v-else-if="cards.length > 0">
+                                    <card v-for="card in cards" :key="card.id" :card="card" :deck="deckList" ></card><!--:deck="deck"-->
 
-                            </b-row>
-                            <b-row v-else class="justify-content-sm-center">
-                                <b-col sm-10>
-                                    <b-alert show variant="danger">No cards found.</b-alert>
-                                </b-col>
-                            </b-row>
-                        </b-container>
-
+                                </b-row>
+                                <b-row v-else class="justify-content-sm-center">
+                                    <b-col sm-10>
+                                        <b-alert show variant="danger">No cards found.</b-alert>
+                                    </b-col>
+                                </b-row>
+                            </b-container>
+                        </b-row>
 
                     </b-col>
                     <div id="deckContainer" class="col-6">
-
-
+                        <b-row></b-row>
+                        <b-row>
+                            <b-container class="cardList border">
+                                <b-row v-if="searching" class="justify-content-sm-center">
+                                    <b-col sm-10>
+                                        <b-alert show variant="warning">Loading your deck...</b-alert>
+                                    </b-col>
+                                </b-row>
+                                <b-row v-else-if="deckList.getCards.length > 0">
+                                    <p>here</p>
+                                    <card v-for="card in deckCardList" :key="card.id" :card="card" :deck="deckList"></card>
+                                </b-row>
+                                <b-row v-else class="justify-content-sm-center">
+                                    <b-col sm-10>
+                                        <b-alert show variant="danger">Add some cards. {{deckList.getCards.length}} </b-alert>
+                                    </b-col>
+                                </b-row>
+                            </b-container>
+                        </b-row>
                     </div>
                 </b-row>
             </b-container>

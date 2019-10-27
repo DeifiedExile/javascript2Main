@@ -1,8 +1,13 @@
 $(document).ready(function(){
 
-    var num = Math.random()*100;
 
-    $('#randnum').html(num);
+    $('.subTypeSelect').css({
+        minWidth: $('#typeSelect').width()
+    });
+
+
+
+
     // $('#tab1').click();
     //
     // $('#closeInfoModal').on('click', function(){
