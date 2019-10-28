@@ -36,41 +36,48 @@
     
                             <b-container id="searchForm" fluid class="border m-3">
                                 <br/>
-    
-                                <b-row>
-    
-                                    <b-col sm="6">
-                                        <label for="typeSelect">Type: </label>
-                                    </b-col>
-                                    <b-col sm="6" >
-                                        <b-form-select id="typeSelect" size="sm" v-model="searchType" :options="cardTypeList"></b-form-select>
-                                    </b-col>
-                                </b-row>
+
+                                <b-button v-b-toggle.collapse-types variant="primary">Type Options</b-button>
+                                <b-collapse id="collapse-types" >
+                                    <b-row>
+
+                                        <b-col sm="6">
+                                            <label for="typeSelect">Type: </label>
+                                        </b-col>
+                                        <b-col sm="6" >
+                                            <b-form-select id="typeSelect" size="sm" v-model="searchType" :options="cardTypeList"></b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                    <br/>
+                                    <b-row>
+
+                                        <b-col sm="6">
+                                            <label for="subTypeSelect">Subtype: </label>
+                                        </b-col>
+                                        <b-col sm="6">
+                                            <b-form-select  v-if="subTypes.length > 0" size="sm" class="subTypeSelect" id="subTypeSelect" v-model="searchSubType" :options="subTypeList"></b-form-select>
+                                            <b-form-select v-else size="sm" disabled="disabled"  class="subTypeSelect">
+                                                <option value=""></option>
+                                            </b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                </b-collapse>
+
                                 <br/>
-                                <b-row>
-    
-                                    <b-col sm="6">
-                                        <label for="subTypeSelect">Subtype: </label>
-                                    </b-col>
-                                    <b-col sm="6">
-                                        <b-form-select  v-if="subTypes.length > 0" size="sm" class="subTypeSelect" id="subTypeSelect" v-model="searchSubType" :options="subTypeList"></b-form-select>
-                                        <b-form-select v-else size="sm" disabled="disabled"  class="subTypeSelect">
-                                            <option value=""></option>
-                                        </b-form-select>
-                                    </b-col>
-    
-    
-                                </b-row>
-                                <br/>
-    
-                                <b-row>
-                                    <div v-for="color in colors" class="colorButton">
-                                        <button type="button" class="btn btn-sm btn-outline-primary colorBtn mx-1"  @click="changeColorOption(color)">{{logicOptions[color.status]}}</button>
-                                        {{color.name}}
-    
-                                    </div>
-    
-                                </b-row>
+
+
+                                <b-button v-b-toggle.collapse-colors variant="primary">Color Options</b-button>
+                                <b-collapse id="collapse-colors">
+                                    <b-row>
+                                        <div v-for="color in colors" class="colorButton">
+                                            <button type="button" class="btn btn-sm btn-outline-primary colorBtn mx-1"  @click="changeColorOption(color)">{{logicOptions[color.status]}}</button>
+                                            {{color.name}}
+
+                                        </div>
+
+                                    </b-row>
+                                </b-collapse>
+
                                 <br/>
     
     
@@ -179,7 +186,7 @@
 
 
         <b-form id="deckForm" >
-            <b-modal id="detailmodal">
+            <b-modal id="detailmodal" hide-footer>
                 <b-tabs v-model="tabIndex">
                     <b-tab card title="Welcome">
                         <b-card-title>Welcome to the Deck Builder</b-card-title>
@@ -216,7 +223,86 @@
                                         :state="descriptionState" trim></b-form-textarea>
 
                             </b-form-group>
+                            <b-button @click="tabIndex++">Next</b-button>
                         </b-card-body>
+                    </b-tab>
+                    <b-tab card title="Additional Details">
+                        <b-button v-b-toggle.collapse-sharing variant="primary">Sharing Options</b-button>
+
+                            <b-collapse id="collapse-sharing">
+                                <b-row>
+                                    <b-col sm="5">
+
+                                        <b-form-checkbox
+                                                id="privateCheck"
+                                                v-model="private"
+                                                name="private"
+                                                value="true"
+                                                unchecked-value="false"
+                                        >
+                                            Private
+                                        </b-form-checkbox>
+                                        <b-form-checkbox
+                                                id="archivedCheck"
+                                                v-model="archived"
+                                                name="archived"
+                                                value="true"
+                                                unchecked-value="false"
+                                        >
+                                            Archived
+                                        </b-form-checkbox>
+
+                                        <b-form-checkbox
+                                                id="helpCheck"
+                                                v-model="needsHelp"
+                                                name="needsHelp"
+                                                value="true"
+                                                unchecked-value="false"
+                                        >
+                                            Needs Help
+                                        </b-form-checkbox>
+
+                                    </b-col>
+                                    <b-col sm="5">
+                                        <b-form-checkbox
+                                                id="prototypeCheck"
+                                                v-model="prototype"
+                                                name="prototype"
+                                                value="true"
+                                                unchecked-value="false"
+                                        >
+                                            Prototype
+                                        </b-form-checkbox>
+
+                                        <b-form-checkbox
+                                                id="draftChecked"
+                                                v-model="draft"
+                                                name="draft"
+                                                value="true"
+                                                unchecked-value="false"
+                                        >
+                                            Draft
+                                        </b-form-checkbox>
+                                        <b-form-checkbox
+                                                id="sealedCheck"
+                                                v-model="sealed"
+                                                name="sealed"
+                                                value="true"
+                                                unchecked-value="false"
+                                        >
+                                            Sealed
+                                        </b-form-checkbox>
+
+
+                                    </b-col>
+                                </b-row>
+
+                            </b-collapse>
+                        <br/>
+
+
+                        <b-button @click="$bvModal.hide('detailmodal')">Continue</b-button>
+
                     </b-tab>
                 </b-tabs>
             </b-modal>
