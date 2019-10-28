@@ -2,9 +2,12 @@ var app = new Vue({
 
     el: '#app',
     data: {
+        userDeck: new UserDeck(),
         tabIndex: 0,
+        deckTabIndex: 0,
         searching: true,
         deckList: new Deck(),
+        buyList: new Deck(),
         deckName: '',
         deckDescription: '',
         private: true,
@@ -61,22 +64,11 @@ var app = new Vue({
             this.cards = this.searchResults.map(c => c.card);
             this.deckCardList = this.deckList.map(c => c.card);
 
-            console.log(this.searchResults);
-            console.log(this.deckList);
 
         },
 
         displaySubTypes() {
             this.subTypes = this.subTypeList;
-            if (this.subTypes.length > 0) {
-                console.log(this.subTypes.length);
-
-                console.log(this.subTypeList.length);
-
-            } else {
-                console.log("none");
-            }
-
 
             $('.subTypeSelect').css({
                 minWidth: $('#typeSelect').width()
@@ -156,7 +148,7 @@ var app = new Vue({
                             // items.foreach(card => {
                             //     this.searchResults.add(card, 1);
                             // });
-                            console.log(url, config);
+
 
 
                         }
@@ -205,9 +197,14 @@ var app = new Vue({
 
         },
         addToDeck(card) {
-            console.log('click');
+ 
             this.deckList.add(card, 1);
             //this.deckCardList = this.deckList.getCards();
+            this.displayCards();
+        },
+        addToBuyList(){
+            this.deckList.add(card, 1);
+            this.buyList.add(card,1);
             this.displayCards();
         },
         changeColorOption(color) {
@@ -224,6 +221,19 @@ var app = new Vue({
                 }
             }
 
+        },
+        purchaseAll(){
+            let purchaseString = '';
+            this.buyList.forEach(function(item){
+                purchaseString += item.quantity + ' ' + item.card.name + '||';
+            });
+            
+            let url = 'https://www.tcgplayer.com/massentry';
+            let config = {
+                params: {
+                    c: purchaseString
+                }
+            }            
         }
 
     },
@@ -259,7 +269,15 @@ var app = new Vue({
     },
     mounted: function () {
         
+        if(localStorage.getItem('userdeck')){
+            this.userDeck = new UserDeck(JSON.parse(LocalStorage.getItem('userdeck')));
+            this.buyList = this.userDeck.buyList;
+            this.deckList = this.userDeck.deckList;
+            this.deckName = this.userDeck.details.deckName;
+            this.description = this.userDeck.details.description;
+        }
         this.searchCards();
+        
     },
     watch: {
         searchType: {
@@ -271,11 +289,32 @@ var app = new Vue({
         },
         deckList: {
             handler: function () {
+               this.displayCards();
+               this.userDeck.deckList = this.deckList;
+            }
+        },
+        buyList: {
+            handler: function(){
                 this.displayCards();
-                console.log(this.deckList);
-                console.log(this.searchResults);
+                this.userDeck.buyList = this.buyList;
+            }
+        },
+        deckName: {
+            handler: function(){
+                this.userDeck.details.name = this.deckName;
+            }
+        },
+        description: {
+            handler: function(){
+                this.userDeck.details.description = this.description;
+            }
+        },
+        userDeck: {
+            handler: function(newDeck){
+                LocalStorage.setItem('userdeck', JSON.stringify(newDeck));
             }
         }
+        
     }
 
 });

@@ -35,7 +35,7 @@ img.card-img{
 .cardButtonsOverlay:hover{
     opacity: 1;
 }
-.addIcon{
+.cardBtn{
     filter: invert(100%);
 }
 .cardList{

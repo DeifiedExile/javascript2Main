@@ -2,8 +2,10 @@ Vue.component('card', {
     props: {
         card: {type: Object, required: true},
         deck: {type: Array, required: true},
+        buylist: {type: Array, required: true},
         showqty: false,
         qty: '',
+        
         
 
     },
@@ -54,6 +56,12 @@ Vue.component('card', {
         },
         removeFromDeck(){
             this.deck.subtract(this.card);
+        },
+        addToBuyList(){
+            this.deck.add(this.card, 1);
+            this.buylist.add(this.card, 1);
+            
+          
         }
 
     },
@@ -68,16 +76,17 @@ Vue.component('card', {
                     <img v-bind:src="this.getImgReg" class="card-img">
                     <div class="cardButtonsOverlay">
                         <div class="row text-center">
-                            <div v-if="showqty == false" class="col-sm-12 btn cardAddButton text-center pt-4 px-4" @click.capture="addToDeck"><h1><i  class="fas fa-plus addIcon"></i></h1></div>
+                            <div v-if="showqty == false" class="col-sm-12 btn cardAddButton text-center pt-4 px-4" @click.capture="addToDeck"><h1><a><i  class="fas fa-plus cardBtn"></i></a></h1></div>
                             <div v-if="showqty == true">
-                                <div class="col-sm-5 btn cardAddButton text-center pt-4 px-4" @click.capture="addToDeck"><h1><i  class="fas fa-plus addIcon"></i></h1></div>   
-                                <div class="col-sm-5 btn cardAddButton text-center pt-4 px-4" @click.capture="removeFromDeck"><h1><i  class="fas fa-minus addIcon"></i></h1></div>                                
+                                <div class="col-sm-5 btn cardButton text-center pt-4 px-3" @click.capture="addToDeck"><h1><i  class="fas fa-plus cardBtn"></i></h1></div>   
+                                <div class="col-sm-5 btn cardButton text-center pt-4 px-4" @click.capture="removeFromDeck"><h1><i  class="fas fa-minus cardBtn"></i></h1></div>                                
                             </div>
                             
                         </div>
                         <div class="row">
-                            <div class="col-sm-5 offset-1 btn text-center "><h1><a v-bind:href="this.getGathererUri"><i class="fas fa-search"></i></a></h1></div>
-                            <div class="col-sm-5 btn text-Center "><h1><a v-bind:href="this.getPurchaseUri"><i class="fas fa-shopping-cart"></i></a></h1></div>
+                            <div class="col-sm-4 btn text-center"><h3><a v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h3></div>
+                            <div class="col-sm-4 btn text-center"><h3><a v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h3></div>
+                            <div class="col-sm-4 btn  text-center" @click.capture="addToBuyList"><h3><i class="fas fa-file-invoice-dollar cardBtn"></i></h3></div>
                         </div>
                         
                         <br/>

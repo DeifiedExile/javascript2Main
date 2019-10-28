@@ -49,16 +49,13 @@ var Deck = function(arr){
 
     return arr;
 
-
-
-
-
 };
-var UserDeck = function(deckList, buyList, name, about){
-    var deck = new Deck(deckList);
-    var buyList = new Deck(buyList)
-    var details = [{deckName: name, description: about}];
- 
+function UserDeck(){
+    
+    this.deckList= new Deck();
+    this.buyList = new Deck();
+    this.details =  [{deckName: '', description: ''}];
+
 };
 
 var TypeList = function(arr){
