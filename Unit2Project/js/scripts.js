@@ -4,6 +4,7 @@ $(document).ready(function(){
     $('.subTypeSelect').css({
         minWidth: $('#typeSelect').width()
     });
+    $('#detailBtn').click();
 
 
 

@@ -1,7 +1,10 @@
 Vue.component('card', {
     props: {
         card: {type: Object, required: true},
-        deck: {type: Array, required: true}
+        deck: {type: Array, required: true},
+        showqty: false,
+        qty: '',
+        
 
     },
     data: function() {
@@ -16,14 +19,30 @@ Vue.component('card', {
             return this.card.image_uris.large;
         },
         getImgReg(){
-          return this.card.image_uris.normal;
+            try {
+                if (this.card.layout === 'split' || this.card.layout === 'flip' || this.card.layout === 'transform' || this.card.layout === 'double_faced_token') {
+                    return this.card.card_faces[0].image_uris.normal;
+                } else {
+                    return this.card.image_uris.normal;
+
+                }
+            }
+            catch
+            {
+                console.log(this.card.name);
+            }
+          
         },
         getImgSmall(){
             return this.card.image_uris.small;
         },
         getGathererUri(){
             return this.card.related_uris.gatherer;
+        },
+        getPurchaseUri(){
+            return this.card.purchase_uris.tcgplayer;
         }
+
 
 
 
@@ -31,21 +50,12 @@ Vue.component('card', {
 
     methods: {
         addToDeck(){
-
-            this.$emit('addCard', [this.card, 1]);
             this.deck.add(this.card, 1);
-            //this.deck.add(this.card, 1);
-
-
-
-            // this.$emit('addToDeck', this.card);
-            //this.deck.add(this.card, 1);
-
-            // this.deck.add(this.card);
+        },
+        removeFromDeck(){
+            this.deck.subtract(this.card);
         }
-        // removeFromDeck(){
-        //     this.deck.subtract(this.card);
-        // }
+
     },
 
     template: `
@@ -57,13 +67,29 @@ Vue.component('card', {
                                    
                     <img v-bind:src="this.getImgReg" class="card-img">
                     <div class="cardButtonsOverlay">
-                        <div class="row btn cardAddButton text-center pt-4 px-4" @click.capture="deck.add(card)"><h1><i  class="fas fa-plus addIcon"></i></h1></div>
+                        <div class="row text-center">
+                            <div v-if="showqty == false" class="col-sm-12 btn cardAddButton text-center pt-4 px-4" @click.capture="addToDeck"><h1><i  class="fas fa-plus addIcon"></i></h1></div>
+                            <div v-if="showqty == true">
+                                <div class="col-sm-5 btn cardAddButton text-center pt-4 px-4" @click.capture="addToDeck"><h1><i  class="fas fa-plus addIcon"></i></h1></div>   
+                                <div class="col-sm-5 btn cardAddButton text-center pt-4 px-4" @click.capture="removeFromDeck"><h1><i  class="fas fa-minus addIcon"></i></h1></div>                                
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5 offset-1 btn text-center "><h1><a v-bind:href="this.getGathererUri"><i class="fas fa-search"></i></a></h1></div>
+                            <div class="col-sm-5 btn text-Center "><h1><a v-bind:href="this.getPurchaseUri"><i class="fas fa-shopping-cart"></i></a></h1></div>
+                        </div>
+                        
                         <br/>
-                        <div class="row btn text-center px-4"><h1><a v-bind:href="this.getGathererUri"><i class="fas fa-search"></i></a></h1></div>
-                    </div>                                 
-<!--                    <p class="card-text info col-6 offset-3"> Quantity: {{card.qty}} </p>-->
-<!--                    <button class="btn btn-tiny" @click="add(card)"><i class="fas fa-plus-circle"></i></button>-->
-<!--                    <button class="btn btn-tiny" @click="subtract(card)"><i class="fas fa-minus-circle"></i></button>-->
+                        
+                    </div>          
+                    <div v-if="showqty == true"><span>Quantity: {{qty}}</span></div>    
+                    
+                                       
+
+                </div>
+                <div class="card-footer">
+                    
                 </div>
             </div>
     `
