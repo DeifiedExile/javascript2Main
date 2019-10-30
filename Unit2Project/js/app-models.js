@@ -54,7 +54,7 @@ var Deck = function(arr){
 var DetailList = function()
 {
     return{
-        deckName: '',
+        deckName: 'Deck',
         deckDescription: '',
         private: true,
         archived: false,

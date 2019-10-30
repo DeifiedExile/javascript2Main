@@ -5,6 +5,13 @@ $(document).ready(function(){
         minWidth: $('#typeSelect').width()
     });
     $('#detailBtn').click();
+    
+    $('#dismissDetailBtn').on('click', function(){
+        $('#overlay').css("display", "block");
+    });
+    $('#overlay').on('click', function(){
+        $(this).css("display", "none");
+    });
 
 
 

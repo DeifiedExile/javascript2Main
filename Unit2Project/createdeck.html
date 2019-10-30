@@ -18,9 +18,17 @@
 </head>
 <body>
 
+
     
 
     <div id="app">
+        <div id="overlay">
+            <div class="text-center overlayContent">
+                <h4>Hover over any card to see options for adding cards to your deck, purchasing and more</h4>
+                <img class="overlayImg" src="img/arrow-2085195_1280.png" height="216" width="320"/>
+                <h5>Click anywhere to continue</h5>
+            </div>
+        </div>
         <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
         <div class="container">
             <ul class="nav nav-tabs">
@@ -130,7 +138,7 @@
                     <b-col sm="6">
                         <b-row>
                             <b-tabs v-model="deckTabIndex">
-                                <b-tab v-bind:title="deckDetails.deckName">
+                                <b-tab v-bind:title="deckDetails.deckName + '(' + deckList.length + ')'"  >
                                     <b-container class="cardList">
                                         <b-row v-if="searching" class="justify-content-sm-center">
                                             <b-col sm="10">
@@ -148,7 +156,7 @@
                                         </b-row>
                                     </b-container>
                                 </b-tab>
-                                <b-tab title="Buylist">
+                                <b-tab v-bind:title="'Buylist (' + buyList.length + ')'">
                                     <b-container class="cardList">
                                         <b-row v-if="searching" class="justify-content-sm-center">
                                             <b-col sm="10">
@@ -386,8 +394,8 @@
                         <br/>
 
 
-                        <b-button @click="$bvModal.hide('detailmodal')">Continue</b-button>
-                        <b-button @click="testname">click</b-button>
+                        <b-button id="dismissDetailBtn" @click="$bvModal.hide('detailmodal')">Continue</b-button>
+<!--                        <b-button @click="testname">click</b-button>-->
 
                     </b-tab>
                 </b-tabs>

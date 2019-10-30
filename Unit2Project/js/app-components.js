@@ -76,17 +76,17 @@ Vue.component('card', {
                     <img v-bind:src="this.getImgReg" class="card-img">
                     <div class="cardButtonsOverlay">
                         <div class="row text-center">
-                            <div v-if="showqty == false" class="col-sm-12 btn cardAddButton text-center pt-4 px-4" @click.capture="addToDeck"><h1><a><i  class="fas fa-plus cardBtn"></i></a></h1></div>
+                            <div v-if="showqty == false" class="col-sm-12 btn cardAddButton btnAdd text-center pt-4 px-4" @click.capture="addToDeck"><h1><a><i  class="fas fa-plus cardBtn"></i></a></h1></div>
                             <div v-if="showqty == true">
-                                <div class="col-sm-5 btn cardButton text-center pt-4 px-3" @click.capture="addToDeck"><h1><i  class="fas fa-plus cardBtn"></i></h1></div>   
-                                <div class="col-sm-5 btn cardButton text-center pt-4 px-4" @click.capture="removeFromDeck"><h1><i  class="fas fa-minus cardBtn"></i></h1></div>                                
+                                <div class="col-sm-5 btn cardButton btnAdd text-center pt-4 px-3" @click.capture="addToDeck"><h1><i  class="fas fa-plus cardBtn"></i></h1></div>   
+                                <div class="col-sm-5 btn cardButton btnMinus text-center pt-4 px-4" @click.capture="removeFromDeck"><h1><i  class="fas fa-minus cardBtn"></i></h1></div>                                
                             </div>
                             
                         </div>
                         <div class="row">
-                            <div class="col-sm-4 btn text-center"><h3><a v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h3></div>
-                            <div class="col-sm-4 btn text-center"><h3><a v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h3></div>
-                            <div class="col-sm-4 btn  text-center" @click.capture="addToBuyList"><h3><i class="fas fa-file-invoice-dollar cardBtn"></i></h3></div>
+                            <div class="col-sm-4 btn text-center"><h3><a class="inspectBtn" v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h3></div>
+                            <div class="col-sm-4 btn text-center"><h3><a class="buyBtn" v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h3></div>
+                            <div class="col-sm-4 btn buyListBtn text-center" @click.capture="addToBuyList"><h3><i class="fas fa-file-invoice-dollar cardBtn"></i></h3></div>
                         </div>
                         
                         <br/>

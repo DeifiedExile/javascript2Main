@@ -77,16 +77,13 @@ var app = new Vue({
     },
 
     methods: {
-        createNew(){
-          this.tabIndex++;
-          
-              
-        },
+        //final update to deck object. insurance for firebase storage
         updateDeck(){
           this.userDeck.details = this.deckDetails;
           this.userDeck.deckList = this.deckList;
           this.userDeck.buyList = this.buyList;
         },
+        //stores deck to firebase
         storeDeck(){
             this.updateDeck();
             let theDeck = this.userDeck;
@@ -99,81 +96,75 @@ var app = new Vue({
                 .add(theDeck)
                 .then((docRef) =>{
                     console.log("deck added: ", docRef);
-                    this.storeDeckList(docRef.id);
-                    this.storeBuyList(docRef.id);
-                    this.storeDetails(docRef.id);
+                    // this.storeDeckList(docRef.id);
+                    // this.storeBuyList(docRef.id);
+                    // this.storeDetails(docRef.id);
                 }).catch((error)=> {
                     console.log("error adding record", error)
             });
         },
-        storeDeckList(docId){
-            
-            if(!docId || !this.userDeck.deckList)
-            {
-                return false;
-            }
-            let theDeck = this.userDeck;
-            
-            storage.child('decks').child(docId)
-                .put(theDeck.deckList)
-                // .then((snapshot) => {
-                //     console.log('uploaded deckList: ', snapshot);
-                //    
-                //     snapshot.ref.getDownloadURL().then((url) => {
-                //         db.collection('decks').doc(docId).update({deckList: url});
-                //     })
-                //    
-                // })
-                .catch((error) => {
-                    console.log("Error uploading file: ", error);
-                });
-            
-            
-        },
-        
-        storeBuyList(docId){
-            
-            if(!docId || !this.userDeck.buyList)
-            {
-                return false;
-            }
-            let theDeck = this.userDeck;
-            
-            storage.child('decks').child(docId)
-                .put(theDeck.buyList)
-                // .then((snapshot) => {
-                //     console.log('uploaded BuyList: ', snapshot);
-                //
-                //     snapshot.ref.getDownloadURL().then((url) => {
-                //         db.collection('decks').doc(docId).update({buyList: url});
-                //     })
-                //
-                // })
-                .catch((error) => {
-                    console.log("Error uploading file: ", error);
-                });
-        },
-        storeDetails(docId){
-            if(!docId || !this.userDeck.details)
-            {
-                return false;
-            }
-            let theDeck = this.userDeck.details;
-            
-            storage.child('decks').child(docId)
-                .put(theDeck.details)
-                // .then((snapshot) => {
-                //     console.log('uploaded details: ', snapshot);
-                //
-                //     snapshot.ref.getDownloadURL().then((url) => {
-                //         db.collection('decks').doc(docId).update({details: url});
-                //     })
-                //
-                // })
-                .catch((error) => {
-                    console.log("Error uploading file: ", error);
-                });
-        },
+        //stores deck list to firebase
+        // storeDeckList(docId){
+        //    
+        //     if(!docId || !this.userDeck.deckList)
+        //     {
+        //         return false;
+        //     }
+        //     let theDeck = this.userDeck;
+        //    
+        //     storage.child('decks').child(docId)
+        //         .put(theDeck.deckList)
+        //       
+        //         .catch((error) => {
+        //             console.log("Error uploading file: ", error);
+        //         });
+        //    
+        //    
+        // },
+        // //stores buyli
+        // storeBuyList(docId){
+        //    
+        //     if(!docId || !this.userDeck.buyList)
+        //     {
+        //         return false;
+        //     }
+        //     let theDeck = this.userDeck;
+        //    
+        //     storage.child('decks').child(docId)
+        //         .put(theDeck.buyList)
+        //         // .then((snapshot) => {
+        //         //     console.log('uploaded BuyList: ', snapshot);
+        //         //
+        //         //     snapshot.ref.getDownloadURL().then((url) => {
+        //         //         db.collection('decks').doc(docId).update({buyList: url});
+        //         //     })
+        //         //
+        //         // })
+        //         .catch((error) => {
+        //             console.log("Error uploading file: ", error);
+        //         });
+        // },
+        // storeDetails(docId){
+        //     if(!docId || !this.userDeck.details)
+        //     {
+        //         return false;
+        //     }
+        //     let theDeck = this.userDeck.details;
+        //    
+        //     storage.child('decks').child(docId)
+        //         .put(theDeck.details)
+        //         // .then((snapshot) => {
+        //         //     console.log('uploaded details: ', snapshot);
+        //         //
+        //         //     snapshot.ref.getDownloadURL().then((url) => {
+        //         //         db.collection('decks').doc(docId).update({details: url});
+        //         //     })
+        //         //
+        //         // })
+        //         .catch((error) => {
+        //             console.log("Error uploading file: ", error);
+        //         });
+        // },
         testname(){
             this.userDeck.details = this.deckDetails;
             
@@ -413,6 +404,11 @@ var app = new Vue({
 
     },
     mounted: function () {
+        this.$root.$on('bv::modal::hidden', function(){
+            
+                $('#overlay').css("display", "block");
+            
+        });
         
         // if(localStorage.getItem('userdeck')){
         //
