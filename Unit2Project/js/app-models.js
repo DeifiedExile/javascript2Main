@@ -1,6 +1,7 @@
 
 var Deck = function(arr){
 
+    
     //create empty array if none provided
     if(!Array.isArray(arr)){
         arr = [];
@@ -50,30 +51,52 @@ var Deck = function(arr){
     return arr;
 
 };
-function UserDeck(){
-    
-    this.deckList= new Deck();
-    this.buyList = new Deck();
-    this.details =  [
-                        {
-                            deckName: '',
-                            deckDescription: '',
-                            private: true,
-                            archived: false,
-                            needsHelp: false,
-                            prototype: true,
-                            draft: false,
-                            sealed: false,
-                            onProfile: true,
-                            syncInventory: false,
-                            noRevisions: false,
-                            showOther: false,
-                            ignoreSuggestions: false,
-                            publicAcquire: false,
-                            showCompetitive: false,
-                        }
-                    ];
-
+var DetailList = function()
+{
+    return{
+        deckName: '',
+        deckDescription: '',
+        private: true,
+        archived: false,
+        needsHelp: false,
+        prototype: true,
+        draft: false,
+        sealed: false,
+        onProfile: true,
+        syncInventory: false,
+        noRevisions: false,
+        showOther: false,
+        ignoreSuggestions: false,
+        publicAcquire: false,
+        showCompetitive: false,
+    }
+}
+var UserDeck = function(){
+    return {
+        deckList: new Deck(),
+        buyList: new Deck(),
+        details: new DetailList(),
+        // details: function() {
+        //     return {
+        //         deckName: '',
+        //         deckDescription: '',
+        //         private: true,
+        //         archived: false,
+        //         needsHelp: false,
+        //         prototype: true,
+        //         draft: false,
+        //         sealed: false,
+        //         onProfile: true,
+        //         syncInventory: false,
+        //         noRevisions: false,
+        //         showOther: false,
+        //         ignoreSuggestions: false,
+        //         publicAcquire: false,
+        //         showCompetitive: false,
+        //     }
+        // }
+        //
+    }
 };
 
 var TypeList = function(arr){
@@ -112,4 +135,4 @@ firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
 var storage = firebase.storage();
-storage.child("decks");
+// storage.child("decks");

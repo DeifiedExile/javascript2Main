@@ -181,7 +181,8 @@
                     <b-tab card title="Welcome">
                         <b-card-title>Welcome to the Deck Builder</b-card-title>
                         <b-card-body>
-                            <b-button @click="tabIndex++">Click here to get started</b-button>
+                            <b-button @click="tabIndex++;">Click here to get started</b-button>
+<!--                            <b-button @click="loadDecks">Load Saved Deck</b-button>-->
                         </b-card-body>
                     </b-tab>
                     <b-tab card title="Deck Info">
@@ -382,34 +383,23 @@
 
                         </b-card>
 
-
-
-
-
-
-
-
-
-
-
-
-
                         <br/>
 
 
                         <b-button @click="$bvModal.hide('detailmodal')">Continue</b-button>
+                        <b-button @click="testname">click</b-button>
 
                     </b-tab>
                 </b-tabs>
             </b-modal>
         </b-form>
-        <button @click="addDeck">Save Deck</button>
+        <button @click="storeDeck">Save Deck</button>
     </div>
     
 </div>
 
 
-<script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
+<script src="https://unpkg.com/vue@2.6.8/dist/vue.min.js"></script>
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
     <script src="https://unpkg.com/vuefire@2.0.0-alpha.20/dist/vuefire.js"></script>
 <script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.js"></script>
@@ -418,60 +408,3 @@
 <script src="js/app.js"></script>
 </body>
 </html>
-<!--<div class="modal fade col-sm="10" offset-1" id="welcomeModal" tabindex="-1" role="dialog">-->
-<!--    <div class="modal-dialog-centered" role="document">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h4 class="modal-title">Welcome to the deck builder</h4>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#infoModal">-->
-<!--                    Click here to get started-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-
-
-<!--<div class="modal fade col-sm="10" offset-1" id="infoModal" tabindex="-1" role="dialog">-->
-
-<!--    <div class="modal-dialog-centered" role="document">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h4 class="modal-title">Lets get some basic information</h4>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <div class="form-group">-->
-<!--                    <label for="deckName">Whats your deck's name?</label>-->
-<!--                    <input type="text" class="form-control" id="deckName" minlength="3" placeholder="Deck Name" required="required">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="deckDescription">Tell us about your deck</label>-->
-<!--                    <textarea class="form-control" id="deckDescription" cols="40" rows="5" placeholder="Deck Description" minlength="3" required="required">-->
-<!--                                </textarea>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <div class="form-row">-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <label for="deckFormat">What format is your deck for?</label>-->
-<!--                            <select name="format" id="deckFormat"></select>-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <label for="deckHubs">What hubs does your deck belong to?</label>-->
-<!--                            <input type="text" id="deckHubs">-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-primary" id="closeInfoModal" >&lt;!&ndash;data-target="#cardModal"&ndash;&gt;-->
-<!--                    Continue-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
