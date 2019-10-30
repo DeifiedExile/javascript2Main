@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -19,6 +21,7 @@
     
 
     <div id="app">
+        <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
         <div class="container">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -97,7 +100,7 @@
                         </b-nav-form>
                     </b-col>
                     <b-col sm="6" class="text-center p-5">
-                        <h1>{{deckName}}</h1>
+                        <h1>{{deckDetails.deckName}}</h1>
                     </b-col>
                 </b-row>
                 <b-row>
@@ -127,7 +130,7 @@
                     <b-col sm="6">
                         <b-row>
                             <b-tabs v-model="deckTabIndex">
-                                <b-tab v-bind:title="deckName">
+                                <b-tab v-bind:title="deckDetails.deckName">
                                     <b-container class="cardList">
                                         <b-row v-if="searching" class="justify-content-sm-center">
                                             <b-col sm="10">
@@ -191,7 +194,7 @@
                                 label-for="deckNameInput"
                                 :invalid-name-feedback="invalidNameFeedback"
                                 :nameState="nameState">
-                                <b-form-input id="deckNameInput" v-model="deckName" :state="nameState" trim></b-form-input>
+                                <b-form-input id="deckNameInput" v-model="deckDetails.deckName" :state="nameState" trim></b-form-input>
                                 
                             </b-form-group>
                             <b-form-group
@@ -203,7 +206,7 @@
                                     :nameState="descriptionState">
                                 <b-form-textarea 
                                         id="deckDescriptionInput" 
-                                        v-model="deckDescription" 
+                                        v-model="deckDetails.deckDescription"
                                         placeholder="Enter a description" 
                                         rows="3"
                                         max-rows="6"
@@ -214,77 +217,183 @@
                         </b-card-body>
                     </b-tab>
                     <b-tab card title="Additional Details">
-                        <b-button v-b-toggle.collapse-sharing variant="primary">Sharing Options</b-button>
 
-                            <b-collapse id="collapse-sharing">
-                                <b-row>
-                                    <b-col sm="5">
+                        <b-card no-body>
+                            <b-card-header header-tag="header" role="tab">
+                                <b-button block v-b-toggle.collapse-sharing variant="primary">Sharing Options</b-button>
+                            </b-card-header>
+                            <b-collapse id="collapse-sharing" accordian="accordian">
+                                <b-card-body>
+                                    <b-row>
+                                        <b-col sm="5">
 
-                                        <b-form-checkbox
-                                                id="privateCheck"
-                                                v-model="private"
-                                                name="private"
-                                                value="true"
-                                                unchecked-value="false"
-                                        >
-                                            Private
-                                        </b-form-checkbox>
-                                        <b-form-checkbox
-                                                id="archivedCheck"
-                                                v-model="archived"
-                                                name="archived"
-                                                value="true"
-                                                unchecked-value="false"
-                                        >
-                                            Archived
-                                        </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="privateCheck"
+                                                    v-model="deckDetails.private"
+                                                    name="private"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Private
+                                            </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="archivedCheck"
+                                                    v-model="deckDetails.archived"
+                                                    name="archived"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Archived
+                                            </b-form-checkbox>
 
-                                        <b-form-checkbox
-                                                id="helpCheck"
-                                                v-model="needsHelp"
-                                                name="needsHelp"
-                                                value="true"
-                                                unchecked-value="false"
-                                        >
-                                            Needs Help
-                                        </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="helpCheck"
+                                                    v-model="deckDetails.needsHelp"
+                                                    name="needsHelp"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Needs Help
+                                            </b-form-checkbox>
 
-                                    </b-col>
-                                    <b-col sm="5">
-                                        <b-form-checkbox
-                                                id="prototypeCheck"
-                                                v-model="prototype"
-                                                name="prototype"
-                                                value="true"
-                                                unchecked-value="false"
-                                        >
-                                            Prototype
-                                        </b-form-checkbox>
+                                        </b-col>
+                                        <b-col sm="5">
+                                            <b-form-checkbox
+                                                    id="prototypeCheck"
+                                                    v-model="deckDetails.prototype"
+                                                    name="prototype"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Prototype
+                                            </b-form-checkbox>
 
-                                        <b-form-checkbox
-                                                id="draftChecked"
-                                                v-model="draft"
-                                                name="draft"
-                                                value="true"
-                                                unchecked-value="false"
-                                        >
-                                            Draft
-                                        </b-form-checkbox>
-                                        <b-form-checkbox
-                                                id="sealedCheck"
-                                                v-model="sealed"
-                                                name="sealed"
-                                                value="true"
-                                                unchecked-value="false"
-                                        >
-                                            Sealed
-                                        </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="draftChecked"
+                                                    v-model="deckDetails.draft"
+                                                    name="draft"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Draft
+                                            </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="sealedCheck"
+                                                    v-model="deckDetails.sealed"
+                                                    name="sealed"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Sealed
+                                            </b-form-checkbox>
 
 
-                                    </b-col>
-                                </b-row>
+                                        </b-col>
+                                    </b-row>
+                                </b-card-body>
 
                             </b-collapse>
+                        </b-card>
+                        <b-card no-body>
+                            <b-card-header>
+                                <b-button block v-b-toggle.collapse-other variant="primary">Other Options</b-button>
+                            </b-card-header>
+                            <b-collapse id="collapse-other" accordian="accordian">
+                                <b-card-body>
+                                    <b-row>
+                                        <b-col sm="5">
+
+                                            <b-form-checkbox
+                                                    id="onProfileCheck"
+                                                    v-model="deckDetails.onProfile"
+                                                    name="onProfile"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Appears on Profile
+                                            </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="syncInventoryCheck"
+                                                    v-model="deckDetails.syncInventory"
+                                                    name="syncInventory"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Sync with Inventory
+                                            </b-form-checkbox>
+
+                                            <b-form-checkbox
+                                                    id="noRevisionsCheck"
+                                                    v-model="deckDetails.noRevisions"
+                                                    name="noRevisions"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Disable revisions
+                                            </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="showOtherCheck"
+                                                    v-model="deckDetails.showOther"
+                                                    name="showOther"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Show other decks
+                                            </b-form-checkbox>
+
+
+                                        </b-col>
+                                        <b-col sm="5">
+                                            <b-form-checkbox
+                                                    id="ignoreSuggestionsCheck"
+                                                    v-model="deckDetails.ignoreSuggestions"
+                                                    name="ignoreSuggestions"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Ignore Suggestions
+                                            </b-form-checkbox>
+
+                                            <b-form-checkbox
+                                                    id="publicAcquireChecked"
+                                                    v-model="deckDetails.publicAcquire"
+                                                    name="publicAcquire"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Public acquire board
+                                            </b-form-checkbox>
+                                            <b-form-checkbox
+                                                    id="showCompetitiveCheck"
+                                                    v-model="deckDetails.showCompetitive"
+                                                    name="showCompetitive"
+                                                    value="true"
+                                                    unchecked-value="false"
+                                            >
+                                                Show competitive meter
+                                            </b-form-checkbox>
+
+
+                                        </b-col>
+                                    </b-row>
+                                </b-card-body>
+
+                            </b-collapse>
+
+                        </b-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <br/>
 
 
@@ -294,12 +403,15 @@
                 </b-tabs>
             </b-modal>
         </b-form>
-
+        <button @click="addDeck">Save Deck</button>
     </div>
     
 </div>
+
+
 <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://unpkg.com/vuefire@2.0.0-alpha.20/dist/vuefire.js"></script>
 <script src="https://unpkg.com/vue-resource@1.5.1/dist/vue-resource.js"></script>
 <script src="js/app-models.js"></script>
 <script src="js/app-components.js"></script>

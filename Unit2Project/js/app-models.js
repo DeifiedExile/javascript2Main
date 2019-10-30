@@ -30,7 +30,7 @@ var Deck = function(arr){
                 return arr[row].quantity -= 1;
             }
         }
-    }
+    };
     arr.remove = function(card)
     {
         return arr.splice(arr.findCard(card), 1);
@@ -54,7 +54,25 @@ function UserDeck(){
     
     this.deckList= new Deck();
     this.buyList = new Deck();
-    this.details =  [{deckName: '', description: ''}];
+    this.details =  [
+                        {
+                            deckName: '',
+                            deckDescription: '',
+                            private: true,
+                            archived: false,
+                            needsHelp: false,
+                            prototype: true,
+                            draft: false,
+                            sealed: false,
+                            onProfile: true,
+                            syncInventory: false,
+                            noRevisions: false,
+                            showOther: false,
+                            ignoreSuggestions: false,
+                            publicAcquire: false,
+                            showCompetitive: false,
+                        }
+                    ];
 
 };
 
@@ -77,4 +95,21 @@ var Color = function(letter, name, status){
 
 
 
-}
+};
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDDiuAduDFgF65wVwtZ_WPYwHrmptOYxU0",
+    authDomain: "fir-demo-f169e.firebaseapp.com",
+    databaseURL: "https://fir-demo-f169e.firebaseio.com",
+    projectId: "fir-demo-f169e",
+    storageBucket: "fir-demo-f169e.appspot.com",
+    messagingSenderId: "745081264078",
+    appId: "1:745081264078:web:113090b7f5193cb2a87d9f"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+var db = firebase.firestore();
+var storage = firebase.storage();
+storage.child("decks");

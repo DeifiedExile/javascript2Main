@@ -1,21 +1,34 @@
+Vue.use(Vuefire);
 var app = new Vue({
 
     el: '#app',
     data: {
+        decks: [],
         userDeck: new UserDeck(),
         tabIndex: 0,
         deckTabIndex: 0,
         searching: true,
         deckList: new Deck(),
         buyList: new Deck(),
-        deckName: '',
-        deckDescription: '',
-        private: true,
-        archived: false,
-        needsHelp: false,
-        prototype: true,
-        draft: false,
-        sealed: false,
+        deckDetails: [
+            {
+                deckName: '',
+                deckDescription: '',
+                private: true,
+                archived: false,
+                needsHelp: false,
+                prototype: true,
+                draft: false,
+                sealed: false,
+                onProfile: true,
+                syncInventory: false,
+                noRevisions: false,
+                showOther: false,
+                ignoreSuggestions: false,
+                publicAcquire: false,
+                showCompetitive: false,}
+        ],
+
         deckCardList: [],
         searchName: '',
         searchType: null,
@@ -56,8 +69,22 @@ var app = new Vue({
 
 
     },
+    firestore: {
+        decks: db.collection('decks'),
+    },
 
     methods: {
+        addDeck(){
+            let theDeck = this.userDeck;
+
+            db.collection('decks')
+                .add(theDeck)
+                .then((docRef) =>{
+                    console.log("deck added: ", docRef);
+                }).catch((error)=> {
+                    console.log("error adding record", error)
+            });
+        },
 
         displayCards(cardList) {
             this.cardList = cardList;
@@ -239,43 +266,81 @@ var app = new Vue({
     },
     computed: {
         nameState(){
-            return this.deckName.length >= 3 
+            if(this.deckDetails.deckName != null) {
+                return this.deckDetails.deckName.length >= 3
+            }
+            else
+            {
+                return false;
+            }
+
         },
         invalidNameFeedback() {
-            if(this.deckName.length > 3) {
-                return ''
-            }
-            else if (this.deckName.length > 0) {
-                return 'Please enter at least 3 characters'
+
+            if(this.deckDetails.deckName != null) {
+                if (this.deckDetails.deckName.length > 3) {
+                    return ''
+                } else if (this.deckDetails.deckName.length > 0) {
+                    return 'Please enter at least 3 characters'
+                }
+                else {
+                    return 'Your deck requires a name'
+                }
             }
             else {
                 return 'Your deck requires a name'
             }
         },
         descriptionState(){
-            return this.deckDescription.length >= 5 
+            if(this.deckDetails.deckDescription != null) {
+                return this.deckDetails.deckDescription.length >= 5
+            }
+            else
+            {
+                return false;
+            }
         },
-        invalidDescriptionFeedback() {            
-            if(this.deckDescription.length > 5){
-                return ''
+        invalidDescriptionFeedback() {
+            if(this.deckDetails.deckDescription != null) {
+                if (this.deckDetails.deckDescription.length > 5) {
+                    return ''
+                } else if (this.deckDetails.deckDescription.length > 0) {
+                    return 'Description must be at least 5 characters'
+                } else {
+                    return 'Your deck needs a description'
+                }
             }
-            else if (this.deckDescription.length > 0) {
-                return 'Description must be at least 5 characters'
-            }
-            else {
+            else
+            {
                 return 'Your deck needs a description'
             }
-        }
+        },
+
     },
     mounted: function () {
         
-        if(localStorage.getItem('userdeck')){
-            this.userDeck = new UserDeck(JSON.parse(LocalStorage.getItem('userdeck')));
-            this.buyList = this.userDeck.buyList;
-            this.deckList = this.userDeck.deckList;
-            this.deckName = this.userDeck.details.deckName;
-            this.description = this.userDeck.details.description;
-        }
+        // if(localStorage.getItem('userdeck')){
+        //
+        //     this.userDeck = new UserDeck(JSON.parse(LocalStorage.getItem('userdeck')));
+        //     this.buyList = this.userDeck.buyList;
+        //     this.deckList = this.userDeck.deckList;
+        //     this.deckDetails.deckName = this.userDeck.details.deckName;
+        //     this.deckDetails.description = this.userDeck.details.description;
+        //     this.deckDetails.private = this.userDeck.details.private;
+        //     this.deckDetails.archived = this.userDeck.details.archived;
+        //     this.deckDetails.needsHelp = this.userDeck.details.needsHelp;
+        //     this.deckDetails.prototype = this.userDeck.details.prototype;
+        //     this.deckDetails.draft = this.userDeck.details.draft;
+        //     this.deckDetails.sealed = this.userDeck.details.sealed;
+        //     this.deckDetails.onProfile = this.userDeck.details.onProfile;
+        //     this.deckDetails.syncInventory = this.userDeck.details.syncInventory;
+        //     this.deckDetails.noRevisions = this.userDeck.details.noRevisions;
+        //     this.deckDetails.showOther = this.userDeck.details.showOther;
+        //     this.deckDetails.ignoreSuggestions = this.userDeck.details.ignoreSuggestions;
+        //     this.deckDetails.publicAcquire = this.userDeck.details.publicAcquire;
+        //     this.deckDetails.showCompetitive = this.userDeck.details.showCompetitive;
+        //
+        // }
         this.searchCards();
         
     },
@@ -288,32 +353,33 @@ var app = new Vue({
             }
         },
         deckList: {
-            handler: function () {
+            handler: function (newDeck) {
                this.displayCards();
                this.userDeck.deckList = this.deckList;
+               localStorage.setItem('userdeck', JSON.stringify(newDeck));
             }
         },
         buyList: {
-            handler: function(){
+            handler: function(newDeck){
                 this.displayCards();
                 this.userDeck.buyList = this.buyList;
+                localStorage.setItem('userdeck', JSON.stringify(newDeck));
             }
         },
-        deckName: {
-            handler: function(){
-                this.userDeck.details.name = this.deckName;
+        deckDetails: {
+            handler: function(newDeck){
+                this.userDeck.details = this.deckDetails;
+                localStorage.setItem('userdeck', JSON.stringify(newDeck));
             }
         },
-        description: {
-            handler: function(){
-                this.userDeck.details.description = this.description;
-            }
-        },
+
         userDeck: {
             handler: function(newDeck){
-                LocalStorage.setItem('userdeck', JSON.stringify(newDeck));
+                localStorage.setItem('userdeck', JSON.stringify(newDeck));
+
             }
-        }
+        },
+        deep: true,
         
     }
 
