@@ -341,12 +341,13 @@ var app = new Vue({
                 purchaseString += item.quantity + ' ' + item.card.name + '||';
             });
             
-            let url = 'https://www.tcgplayer.com/massentry';
+            let url = 'https://store.tcgplayer.com/massentry?partner=Scryfall&utm_campaign=affiliate&utm_medium=scryfall&utm_source=scryfall';
             let config = {
                 params: {
                     c: purchaseString
                 }
-            }            
+            }
+            this.$http.get(url, config);
         }
 
     },

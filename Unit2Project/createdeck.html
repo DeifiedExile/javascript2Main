@@ -137,7 +137,7 @@
                     </b-col>
                     <b-col sm="6">
                         <b-row>
-                            <b-tabs v-model="deckTabIndex">
+                            <b-tabs v-model="deckTabIndex" justified>
                                 <b-tab v-bind:title="deckDetails.deckName + '(' + deckList.length + ')'"  >
                                     <b-container class="cardList">
                                         <b-row v-if="searching" class="justify-content-sm-center">
