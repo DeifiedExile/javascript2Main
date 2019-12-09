@@ -399,6 +399,7 @@ Vue.component('navigation', {
 
         logout(){
             firebase.auth().signOut();
+
         },
     },
 

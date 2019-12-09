@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LEAD IT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- BootstrapVue -->
+    <!--<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="css/app.min.css">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
+
+    <!-- fonts / icons -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Signika+Negative:700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div id="app" >
+    <b-container fluid>
+        <b-row>
+            <b-col cols="4">
+                <h3>Create</h3>
+                <b-button size="sm" class="m-1" @click="createUser1">Create Bart</b-button><br>
+                <b-button size="sm" class="m-1" @click="createUser2">Create Lisa</b-button><br>
+                <b-button size="sm" class="m-1" @click="createUser3">Create Chris</b-button><br>
+                <b-button size="sm" class="m-1" @click="createUser4">Create Meg</b-button><br>
+            </b-col>
+            <b-col cols="4">
+                <h3>Login</h3>
+                <b-button size="sm" class="m-1" @click="loginUser1">Login Bart</b-button><br>
+                <b-button size="sm" class="m-1" @click="loginUser2">Login Lisa</b-button><br>
+                <b-button size="sm" class="m-1" @click="loginUser3">Login Chris</b-button><br>
+                <b-button size="sm" class="m-1" @click="loginUser4">Login Meg</b-button><br>
+            </b-col>
+            <b-col cols="4">
+                <h3>Score</h3>
+                <b-button size="sm" class="m-1" @click="addToUser1">Bart +1</b-button><br>
+                <b-button size="sm" class="m-1" @click="addToUser2">Lisa +1</b-button><br>
+                <b-button size="sm" class="m-1" @click="addToUser3">Chris +1</b-button><br>
+                <b-button size="sm" class="m-1" @click="addToUser4">Meg +1</b-button><br>
+            </b-col>
+        </b-row>
+        <hr>
+        <b-row>
+            <b-col cols="8">
+                <div v-if="loggedIn">
+                    <h3>{{user.firstName + ' ' + user.lastName}}</h3>
+                    <p>{{user.school}}</p>
+                    <b-button size="sm" class="m-1" @click="logout">Logout</b-button>
+                    <br>
+
+                    <b-button size="sm" class="m-1" variant="success" @click="addToMyScore">+1</b-button>
+                </div>
+            </b-col>
+            <b-col cols="4">
+                <leaderboard :auth-user="authUser"></leaderboard>
+            </b-col>
+        </b-row>
+    </b-container>
+</div>
+<div class="footer">
+    <div>&copy; 2019 — <strong>LEAD IT</strong></div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
+
+<!-- Vue Libraries/Plugins -->
+<script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<!--<script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>--> <!-- for use with realtime database -->
+<script src="https://unpkg.com/vuefire@2.0.0-alpha.20/dist/vuefire.js"></script><!-- for use with firestore -->
+
+<!-- Vue Application -->
+<script src="js/app-models.js"></script>
+<script src="js/app-components.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
