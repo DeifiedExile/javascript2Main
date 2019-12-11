@@ -14,5 +14,6 @@
     <orderEntry type="library" name="firebase" level="application" />
     <orderEntry type="library" name="vue-router" level="application" />
     <orderEntry type="library" name="firebase-app" level="application" />
+    <orderEntry type="library" name="numeral" level="application" />
   </component>
 </module>

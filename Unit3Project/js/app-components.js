@@ -231,14 +231,26 @@ Vue.component('deck', {
         deck: {type: Object, required: true},
         collection: {type: String, required: true}
     },
+    filters:{
+        formatNumber: function(value){
+            if(!value)
+            {
+                return '';
+            }
+            else
+            {
+                return numeral(value).format('0.00');
+            }
+        }
+    },
     template: `
         
             <tr>
                 <td>{{deck.createdBy.displayName}}</td>
                 <td><router-link :to="{ name: 'deck', params: { id: deck.id }}">{{deck.details.deckName}}</router-link></td>
-                <td v-if="collection === 'budget' || collection === 'user'">{{deck.avgCost}}</td>
-                <td v-if="collection === 'competitive' || collection === 'user'">{{deck.competitiveScore}}</td>
-                <td v-if="collection === 'mixed' || collection === 'user'">{{deck.mixedScore}}</td>
+                <td v-if="collection === 'budget' || collection === 'user'">{{deck.avgCost | formatNumber}}</td>
+                <td v-if="collection === 'competitive' || collection === 'user'">{{deck.competitiveScore | formatNumber}}</td>
+                <td v-if="collection === 'mixed' || collection === 'user'">{{deck.mixedScore | formatNumber}}</td>
                 <td>{{deck.createDate.toDate().toLocaleDateString("en-US")}}</td>
             </tr>
         
