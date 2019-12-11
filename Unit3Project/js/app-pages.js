@@ -1,7 +1,7 @@
 const HomePage = Vue.component('HomePage', {
     mixins: [userMixin],
     template: `
-    <div class="row">
+    <div class="row p-3">
         <div class="col-md-4">
             <deck-list collection="competitive">        
             </deck-list>
