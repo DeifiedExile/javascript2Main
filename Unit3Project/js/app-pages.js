@@ -250,22 +250,47 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                 let notColors = '';
                 let andColors = '';
                 let orColors = '';
+                let colorString = '(c:';
                 this.colors.forEach(function(color){
-                    if(color.status === 0)
+                   if(color.status === 0)
+                   {
+                       notColors += ' -c:' + color.letter;
+                   }
+                });
+                this.colors.forEach(function(color){
+                    if(color.status === 2)
                     {
-                        // notColors += color.letter;
-                        notColors += ' c!='+ color.letter ;
+
+                        colorString += color.letter + notColors + ') or (c:'
                     }
-                    else if (color.status === 1)
+                });
+                this.colors.forEach(function(color){
+                    if(color.status === 1)
                     {
                         andColors += color.letter;
                     }
-                    if(color.status === 2)
-                    {
-                        orColors += ' or c:' + color.letter;
-                    }
                 });
-                queryString += queryTypes + ' ((c:' + andColors + notColors + ')' + orColors + notColors + ')';
+                colorString += andColors + ' ' + notColors + ')';
+
+
+
+                // this.colors.forEach(function(color){
+                //     if(color.status === 0)
+                //     {
+                //         // notColors += color.letter;
+                //         notColors += ' c!='+ color.letter ;
+                //     }
+                //     else if (color.status === 1)
+                //     {
+                //         andColors += color.letter;
+                //     }
+                //     if(color.status === 2)
+                //     {
+                //         orColors += ' or c:' + color.letter;
+                //     }
+                // });
+                // queryString += queryTypes + ' ((c:' + andColors + notColors + ')' + orColors + notColors + ')';
+                queryString += queryTypes + colorString;
 
 
                 //build request
