@@ -369,13 +369,13 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                 </div>
             </div>
             
-            <div class="container">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <b-button v-b-modal.detailmodal id="detailBtn">Deck Details</b-button>
-                    </li>
-                </ul>
-            </div>
+<!--            <div class="container">-->
+<!--                <ul class="nav nav-tabs">-->
+<!--                    <li class="nav-item">-->
+<!--                        <b-button v-b-modal.detailmodal id="detailBtn">Deck Details</b-button>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
 
             <b-form id="cardForm" @submit.prevent="addDeck()">
 
@@ -454,9 +454,21 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
 
                             </b-nav-form>
                         </b-col>
-                        <b-col sm="6" class="text-center p-5">
-                            <h1 class="text-light">{{newUserDeck.details.deckName}}</h1>
+                        <b-col sm="6">
+                            <b-row>
+                                <b-col sm="4" offset="4" class="text-center">
+                                    <b-button v-b-modal.detailmodal id="detailBtn">Deck Details</b-button>
+                                </b-col>
+                            </b-row>
+                            <b-row>
+                                <b-col sm="12" class="text-center">
+                                <h1 class="text-light">{{newUserDeck.details.deckName}}</h1>
+                                </b-col>
+                            </b-row>
                         </b-col>
+<!--                        <b-col sm="6" class="text-center p-5">-->
+<!--                            <h1 class="text-light">{{newUserDeck.details.deckName}}</h1>-->
+<!--                        </b-col>-->
                     </b-row>
                     <b-row>
                         <b-col sm="6" >
