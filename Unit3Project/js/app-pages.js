@@ -2,17 +2,19 @@ const HomePage = Vue.component('HomePage', {
     mixins: [userMixin],
     template: `
     <div class="row">
-        
+        <div class="col-md-4">
             <deck-list collection="competitive">        
             </deck-list>
-       
-        
+        </div>
+        <div class="col-md-4">
             <deck-list collection="mixed">        
             </deck-list>
-       
+        </div>
+        <div class="col-md-4">
             <deck-list collection="budget">        
             </deck-list>
-       
+        </div>
+     
     </div>
         
     `
@@ -21,8 +23,11 @@ const MyDecksPage = Vue.component('MyDecksPage', {
     mixins: [userMixin],
     template: `
         <div class="row">
-            <deck-list collection="user">        
-            </deck-list>
+            <div class="col-md-12">
+                <deck-list collection="user">        
+                </deck-list>
+            </div>
+            
         </div>
     
     `
@@ -61,12 +66,12 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
             searchSubType: null,
             subTypeList: new TypeList(),
             colors: [
-                {name: 'White', status: 1, letter: 'w'},
-                {name: 'Blue', status: 0, letter: 'u'},
-                {name: 'Black', status: 0, letter: 'b'},
-                {name: 'Red', status: 0, letter: 'r'},
-                {name: 'Green', status: 0, letter: 'g'},
-                {name: 'Colorless', status: 0, letter: 'c'},
+                {name: 'White', status: 2, letter: 'w'},
+                {name: 'Blue', status: 2, letter: 'u'},
+                {name: 'Black', status: 2, letter: 'b'},
+                {name: 'Red', status: 2, letter: 'r'},
+                {name: 'Green', status: 2, letter: 'g'},
+                {name: 'Colorless', status: 2, letter: 'c'},
 
             ],
             logicOptions: ['NOT', 'AND', 'OR'],
@@ -353,7 +358,7 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                     <b-row>
                         <b-col sm="6">
                         
-                            <b-nav-form  @submit.prevent="searchCards()">
+                            <b-nav-form class="form-inline" @submit.prevent="searchCards()">
                             
 
                                 <div id="searchForm"  class="container-fluid border">
@@ -391,7 +396,7 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                                             
                                         </b-col>
                                         <b-col sm="6">
-                                            <b-button class="mt-1" v-b-toggle.collapse-colors variant="primary">Colors</b-button>
+                                            <b-button v-b-toggle.collapse-colors variant="primary">Colors</b-button>
                                             <b-collapse id="collapse-colors">
                                                 <b-row>
                                                     <div v-for="color in colors" class="colorButton">
@@ -408,11 +413,13 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                                     
 
                                    
-                                    <b-row class="text-center">
-                                        <b-col sm="6">
-                                            <label for="searchInput">Search term: </label>
-                                            <b-form-input id="searchInput" size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
-                                            <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
+                                    <b-row class="text-center mt-2">
+                                        <b-col>
+                                            <div class="form-group">
+                                                <label for="searchInput" class="mr-3">Search term: </label>
+                                                <b-form-input id="searchInput" size="sm" type="text" placeholder="Card Search" v-model="searchName"></b-form-input>
+                                                <b-button size="sm" type="submit"><i class="fas fa-search"></i></b-button>
+                                            </div>
                                         </b-col>
 
                                     </b-row>
@@ -423,7 +430,7 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                             </b-nav-form>
                         </b-col>
                         <b-col sm="6" class="text-center p-5">
-                            <h1>{{newUserDeck.details.deckName}}</h1>
+                            <h1 class="text-light">{{newUserDeck.details.deckName}}</h1>
                         </b-col>
                     </b-row>
                     <b-row>

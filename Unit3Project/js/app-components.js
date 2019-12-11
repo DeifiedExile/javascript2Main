@@ -49,31 +49,91 @@ Vue.component('card', {
         }
     },
 
+
+
     template: `
+
+<!--<div class="mtgCard">-->
+<!--    <div class="row card-header">-->
+<!--        <div class="col-12 text-center">-->
+<!--            <h6 class="card-title rounded " >{{card.name}}</h6>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--        <div class="col-10 offset-1 card-body mtgCardBody text-center">-->
+<!--            <img v-bind:src="this.getImgReg" class="card-img" v-bind:alt="card.name">-->
+<!--            <div  class="cardButtonsOverlay text-center">-->
+<!--                <div v-if="editable" class="row text-center">-->
+<!--                    <div v-if="showqty == false" class="col-sm-12 btn cardButton cardAddButton btnAdd text-center pt-4 px-4" @click.capture="addToDeck()"><h1><a><i  class="fas fa-plus cardBtn"></i></a></h1></div>                            -->
+<!--                    <div v-if="showqty == true">-->
+<!--                        <div class="col-sm-5 btn cardButton btnAdd text-center pt-4 px-3" @click.capture="addToDeck()"><h1><i  class="fas fa-plus cardBtn"></i></h1></div>-->
+<!--                        <div class="col-sm-5 btn cardButton btnMinus text-center pt-4 px-4" @click.capture="removeFromDeck()"><h1><i  class="fas fa-minus cardBtn"></i></h1></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div v-if="editable" class="row">-->
+<!--                    <div class="col-sm-4 btn text-center"><h3><a class="inspectBtn" v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h3></div>-->
+<!--                    <div class="col-sm-4 btn text-center"><h3><a class="buyBtn" v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h3></div>-->
+<!--                    <div class="col-sm-4 btn cardButton buyListBtn text-center" @click.capture="addToBuyList"><h3><i class="fas fa-file-invoice-dollar cardBtn"></i></h3></div>-->
+<!--                </div>-->
+<!--                <div v-if="!editable">-->
+<!--                    <div class="col-sm-10 offset-1 mt-4 btn text-center"><h2><a class="inspectBtn" v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h2></div>-->
+<!--                    <div class="col-sm-10 offset-1 btn text-center"><h2><a class="inspectBtn" v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h2></div>-->
+<!--                    -->
+<!--                -->
+<!--                </div>-->
+<!--                <br/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div> &lt;!&ndash;end row &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="col-12 text-center">-->
+<!--            <span>$ {{card.prices.usd}}</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div v-if="showqty == true" class="row">-->
+<!--        <div class="col-12 text-center"><span>Quantity: {{qty}}</span></div>  -->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--        <div class="card-footer">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+
+
             <div class="card mtgCard">
                 <div class="card-header text-center">
-                    <h6 class="card-title rounded " >{{card.name}}</h6>
+                    <h6  class="card-title rounded " >{{card.name}}</h6>
                 </div>
                 <div class="card-body mtgCardBody text-center">                                    
-                    <img v-bind:src="this.getImgReg" class="card-img">
-                    <div  class="cardButtonsOverlay">
-                        <div class="row text-center">
-                            <div v-if="showqty == false && editable" class="col-sm-12 btn cardButton cardAddButton btnAdd text-center pt-4 px-4" @click.capture="addToDeck()"><h1><a><i  class="fas fa-plus cardBtn"></i></a></h1></div>                            
+                    <img v-bind:src="this.getImgReg" class="card-img" v-bind:alt="card.name">
+                    <div  class="cardButtonsOverlay text-center">
+                        <div v-if="editable" class="row text-center">
+                            <div v-if="showqty == false" class="col-sm-12 btn cardButton cardAddButton btnAdd text-center pt-4 px-4" @click.capture="addToDeck()"><h1><a><i  class="fas fa-plus cardBtn"></i></a></h1></div>                            
                             <div v-if="showqty == true">
-                                <div v-if="editable" class="col-sm-5 btn cardButton btnAdd text-center pt-4 px-3" @click.capture="addToDeck()"><h1><i  class="fas fa-plus cardBtn"></i></h1></div>
-                                <div v-if="editable" class="col-sm-5 btn cardButton btnMinus text-center pt-4 px-4" @click.capture="removeFromDeck()"><h1><i  class="fas fa-minus cardBtn"></i></h1></div>
+                                <div class="col-sm-5 btn cardButton btnAdd text-center pt-4 px-3" @click.capture="addToDeck()"><h1><i  class="fas fa-plus cardBtn"></i></h1></div>
+                                <div class="col-sm-5 btn cardButton btnMinus text-center pt-4 px-4" @click.capture="removeFromDeck()"><h1><i  class="fas fa-minus cardBtn"></i></h1></div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div v-if="editable" class="row">
                             <div class="col-sm-4 btn text-center"><h3><a class="inspectBtn" v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h3></div>
                             <div class="col-sm-4 btn text-center"><h3><a class="buyBtn" v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h3></div>
-                            <div v-if="editable" class="col-sm-4 btn cardButton buyListBtn text-center" @click.capture="addToBuyList"><h3><i class="fas fa-file-invoice-dollar cardBtn"></i></h3></div>
+                            <div class="col-sm-4 btn cardButton buyListBtn text-center" @click.capture="addToBuyList"><h3><i class="fas fa-file-invoice-dollar cardBtn"></i></h3></div>
+                        </div>
+                        <div v-if="!editable">
+                            <div class="col-sm-10 offset-1 mt-4 btn text-center"><h2><a class="inspectBtn" v-bind:href="this.getGathererUri"><i class="fas fa-search cardBtn"></i></a></h2></div>
+                            <div class="col-sm-10 offset-1 btn text-center"><h2><a class="inspectBtn" v-bind:href="this.getPurchaseUri"><i class="fas fa-search-dollar cardBtn"></i></a></h2></div>
+                            
+                        
                         </div>
                         <br/>
                     </div>        
                     <b-row>
                         <b-col>
-                            <span>$ {{card.prices.usd}}</span>
+                            <span v-if="card.prices.usd != null">$ {{card.prices.usd}}</span>
+                            <span v-else>Unknown Price</span>
                         </b-col>
                     </b-row>  
                     <div v-if="showqty == true"><span>Quantity: {{qty}}</span></div>    
@@ -86,7 +146,7 @@ Vue.component('card', {
 Vue.component('navigation', {
     mixins: [userMixin],
     template: `
-        <ul class="list-unstyled components list-group list-group-horizontal">
+        <ul class="list-unstyled components list-group list-group-horizontal justify-content-center">
             <li class="list-group-item list-group-item-dark "><router-link to="/home"  >Home</router-link></li>
             <li v-if="authUser" class="list-group-item list-group-item-dark"><router-link to="/mydecks">My Decks</router-link></li>
             <li v-if="authUser" class="list-group-item list-group-item-dark"><router-link to="/create">Create Deck</router-link></li>
@@ -140,7 +200,7 @@ Vue.component('deckList', {
     computed: {},
     methods: {},
     template: `
-        <div class="deck-list col-md-4 border rounded">
+        <div class="deck-list border rounded">
         
             <div class="row text-center">
                 <div class="col-12 text-center">
@@ -153,9 +213,9 @@ Vue.component('deckList', {
                 <tr>
                     <th>User</th>
                     <th>Deck Name</th>
-                    <th v-if="collection === 'budget'">Budget Score</th>
-                    <th v-if="collection === 'competitive'">Competitive Score</th>
-                    <th v-if="collection === 'mixed'">Efficiency Score</th>
+                    <th v-if="collection === 'budget' || collection === 'user'">Budget Score</th>
+                    <th v-if="collection === 'competitive' || collection === 'user'">Competitive Score</th>
+                    <th v-if="collection === 'mixed' || collection === 'user'">Efficiency Score</th>
                     <th>Date Created</th>
                 </tr>
                 <deck v-if="decks" v-for="deck in decks" :key="deck.id" :deck="deck" :collection="collection"></deck>
@@ -176,9 +236,9 @@ Vue.component('deck', {
             <tr>
                 <td>{{deck.createdBy.displayName}}</td>
                 <td><router-link :to="{ name: 'deck', params: { id: deck.id }}">{{deck.details.deckName}}</router-link></td>
-                <td v-if="collection === 'budget'">{{deck.avgCost}}</td>
-                <td v-if="collection === 'competitive'">{{deck.competitiveScore}}</td>
-                <td v-if="collection === 'mixed'">{{deck.mixedScore}}</td>
+                <td v-if="collection === 'budget' || collection === 'user'">{{deck.avgCost}}</td>
+                <td v-if="collection === 'competitive' || collection === 'user'">{{deck.competitiveScore}}</td>
+                <td v-if="collection === 'mixed' || collection === 'user'">{{deck.mixedScore}}</td>
                 <td>{{deck.createDate.toDate().toLocaleDateString("en-US")}}</td>
             </tr>
         
@@ -230,45 +290,54 @@ Vue.component('deckDetail', {
                 </b-col>
             </b-row>
             <b-row>
-                <b-col sm="10" offset="1">
+                <b-col sm="6">
                     <b-row>
-                        <b-tabs v-model="deckTabIndex" justified>
-                            <b-tab v-bind:title="userDeck.details.deckName"  >
-                                <b-container class="cardList">
-                                    
-                                    <b-row v-if="userDeck.deckList.length > 0">
-        
-        <!--                                                <card v-for="card in newUserDeck.deckList" :key="card.card.id" :card="card.card" :deck="newUserDeck.deckList" :buylist="newUserDeck.buyList" :showqty="false" ></card>-->
-                                        <card v-for="card in userDeck.deckList" :key="card.card.id" :card="card.card" :user-deck="userDeck" :showqty="true" :qty="card.quantity" :editable="false"></card>
-                                        
-                                    </b-row>
-                                    <b-row v-else class="justify-content-sm-center">
-                                        <b-col sm="10">
-                                            <b-alert show variant="danger">{{userDeck.deckList.length}} cards in deck. Add some cards. </b-alert>
-                                        </b-col>
-                                    </b-row>
-                                </b-container>
-                            </b-tab>
-                            <b-tab title="Buylist">
-                                <b-container class="cardList">
-                                    
-                                    <b-row v-if="userDeck.buyList.length > 0">
-        <!--                                                <card v-for="card in newUserDeck.buyList" :key="card.card.id" :card="card.card" :deck="newUserDeck.deckList" :buylist="newUserDeck.buyList" :showqty="true" :qty="card.quantity"></card>-->
-                                        <card v-for="card in userDeck.buyList" :key="card.card.id" :card="card.card" :user-deck="userDeck" :showqty="true" :qty="card.quantity" :editable="false"></card>
-                                        
-                                    </b-row>
-                                    <b-row v-else class="justify-content-sm-center">
-                                        <b-alert show variant="danger">{{userDeck.buyList.length}} cards in buy list.</b-alert>
-                                    </b-row>
-                                </b-container>
-                                <b-container>
-        <!--                                            <b-button @click="purchaseAll">Purchase All</b-button>-->
-                                </b-container>
-        
-                            </b-tab>
-                        </b-tabs>
-        
+                        <b-col sm="10" offset="1">
+                            <b-row>
+                                <b-tabs v-model="deckTabIndex" justified>
+                                    <b-tab v-bind:title="userDeck.details.deckName"  >
+                                        <b-container class="cardList">
+                                            
+                                            <b-row v-if="userDeck.deckList.length > 0">
+                
+                <!--                                                <card v-for="card in newUserDeck.deckList" :key="card.card.id" :card="card.card" :deck="newUserDeck.deckList" :buylist="newUserDeck.buyList" :showqty="false" ></card>-->
+                                                <card v-for="card in userDeck.deckList" :key="card.card.id" :card="card.card" :user-deck="userDeck" :showqty="true" :qty="card.quantity" :editable="false"></card>
+                                                
+                                            </b-row>
+                                            <b-row v-else class="justify-content-sm-center">
+                                                <b-col sm="10">
+                                                    <b-alert show variant="danger">{{userDeck.deckList.length}} cards in deck. Add some cards. </b-alert>
+                                                </b-col>
+                                            </b-row>
+                                        </b-container>
+                                    </b-tab>
+                                    <b-tab title="Buylist">
+                                        <b-container class="cardList">
+                                            
+                                            <b-row v-if="userDeck.buyList.length > 0">
+                <!--                                                <card v-for="card in newUserDeck.buyList" :key="card.card.id" :card="card.card" :deck="newUserDeck.deckList" :buylist="newUserDeck.buyList" :showqty="true" :qty="card.quantity"></card>-->
+                                                <card v-for="card in userDeck.buyList" :key="card.card.id" :card="card.card" :user-deck="userDeck" :showqty="true" :qty="card.quantity" :editable="false"></card>
+                                                
+                                            </b-row>
+                                            <b-row v-else class="justify-content-sm-center">
+                                                <b-alert show variant="danger">{{userDeck.buyList.length}} cards in buy list.</b-alert>
+                                            </b-row>
+                                        </b-container>
+                                        <b-container>
+                <!--                                            <b-button @click="purchaseAll">Purchase All</b-button>-->
+                                        </b-container>
+                
+                                    </b-tab>
+                                </b-tabs>
+                
+                            </b-row>
+                        </b-col>
                     </b-row>
+                </b-col>
+                
+                <b-col class="text-light text-center">
+                
+                    {{userDeck.details.deckDescription}}
                 </b-col>
             </b-row>
         </div>

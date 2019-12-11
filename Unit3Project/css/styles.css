@@ -2,6 +2,12 @@ img.card-img{
     height: 175px;
     width: 125px;
     display: block;
+    margin: auto
+
+}
+span.card-title{
+
+    font-size: 100vw;
 }
 .colorBtn{
     min-width: 4em;
@@ -19,10 +25,11 @@ img.card-img{
     background-color: rgba(0,0,0,.5);
 }
 .card-img{
-
     z-index: 10;
 }
 .cardButtonsOverlay{
+    /*margin: auto;*/
+    left: 40px;
     height: 175px;
     width: 125px;
     background-color: rgba(0,0,0,.5);
@@ -37,8 +44,14 @@ img.card-img{
     opacity: 1;
 }
 .cardBtn{
+    color: #0066CC;
     filter: invert(100%);
 
+}
+
+.cardBtn:hover{
+    filter: brightness(85%);
+    /*color: #*/
 }
 .cardButton{
     cursor: pointer
@@ -79,8 +92,9 @@ body{
     position: relative;
 }
 .avatar{
-    width: 20px;
-    height: 20px;
+
+    width: 40px;
+    height: 40px;
 }
 img#logo{
     width: 40px;

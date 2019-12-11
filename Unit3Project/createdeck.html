@@ -42,56 +42,25 @@
 
     <div id="app">
 
-        <div id="navbar" class="row">
-            <div class="col-sm-1 justify-content-center">
+        <div id="navbar" class="row mx-1 mt-1">
+            <div class="col-sm-1  justify-content-center">
                 <router-link to="/home">
                     <img src="img/logo.png" id="logo" fluid alt="Deck Builder Logo"/>
                 </router-link>
             </div>
-            <div class="col-sm-6 offset-sm-2 justify-content-center align-content-center">
+            <div class="col-sm-10  justify-content-center align-content-center">
                 <navigation :auth-user="authUser"></navigation>
             </div>
-            <div class="col-sm-1 offset-sm-2 justify-content-end">
-                <div v-if="authUser">
+            <div class="col-sm-1  justify-content-end text-right">
+                <div v-if="authUser" class="justify-content-end">
                     <b-img :src="authUser.photoURL" class="avatar"></b-img>
                 </div>
 
             </div>
         </div>
 
-<!--        <nav id="sidebar">-->
-<!--            <div class="sidebar-header">-->
-<!--                <router-link to="/home">-->
-<!--                    <img src="img/logo.png" id="logo" fluid alt="Deck Builder Logo"></img>-->
-<!--                </router-link>-->
-<!--            </div>-->
-<!--            <navigation :auth-user="authUser"></navigation>-->
-
-
-<!--        </nav>-->
         <div id="content">
-<!--            <b-navbar  toggleable="md" type="dark" variant="primary" class="justify-content-between">-->
-<!--                <div>-->
-<!--                    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>-->
 
-<!--                    <b-navbar-brand class="d-md-none">-->
-<!--                        Deck Builder-->
-<!--                    </b-navbar-brand>-->
-<!--                </div>-->
-
-<!--                <div>&nbsp;</div>-->
-
-<!--                <div v-if="authUser">-->
-<!--                    <b-img :src="authUser.photoURL" class="avatar"></b-img>-->
-<!--                </div>-->
-
-<!--                <div class="d-md-none col-12" >-->
-<!--                    <b-collapse is-nav id="nav_collapse">-->
-<!--                        <navigation :auth-user="authUser"></navigation>-->
-<!--                    </b-collapse>-->
-<!--                </div>-->
-
-<!--            </b-navbar>-->
 
             <router-view :auth-user="authUser"></router-view>
         </div>
@@ -106,6 +75,7 @@
 
 <!--Vue-->
 <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-resize-text"></script>
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 <script src="https://unpkg.com/vuefire@2.0.0-alpha.20/dist/vuefire.js"></script>

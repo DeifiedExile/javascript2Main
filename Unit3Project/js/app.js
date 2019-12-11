@@ -1,4 +1,6 @@
+
 Vue.use(Vuefire);
+Vue.use(VueResizeText);
 // Vue.use(VueRouter);
 
 
