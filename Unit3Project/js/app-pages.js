@@ -485,7 +485,7 @@ const CreateDeckPage = Vue.component('CreateDeckPage', {
                             </b-row>
 
                         </b-col>
-                        <b-col sm="6">
+                        <b-col id="deckPanel" sm="6">
                             <b-row>
                                 <b-tabs v-model="deckTabIndex" justified>
                                     <b-tab v-bind:title="newUserDeck.details.deckName + '(' + newUserDeck.deckList.cardCount() + ')'"  >

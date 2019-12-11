@@ -58,7 +58,7 @@ span.card-title{
 }
 .cardList{
     width: 850px;
-    height: 800px;
+    height: 600px;
     overflow-y: scroll;
     
 }
@@ -99,4 +99,7 @@ body{
 img#logo{
     width: 40px;
     height: 40px;
+}
+#deckPanel{
+    top: -40px;
 }
